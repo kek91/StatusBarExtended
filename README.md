@@ -20,7 +20,7 @@ Turn the plugin on or off by using the keyboard shortcut, default is **F3**.
  - Progress bar for IO operations
  - Show number of files and filesize for currently selected files if any files are selected
  - Clean up the json code mess - replace import python json with fmans builtin functions
- - Include files without file extension as well (currently doing "glob *.*")
+ - Include files without file extension as well (currently doing `glob *.*`)
  - ++
 
 **Screenshots**
