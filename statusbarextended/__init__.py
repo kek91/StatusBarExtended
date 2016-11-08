@@ -26,47 +26,58 @@ class ToggleStatusBarExtended(DirectoryPaneCommand):
 
         if statusBarExtendedEnabled == 'true':
             save_json('StatusBarExtended.json', '{"enabled": false}')
+            show_status_message("Disabled StatusBarExtended", 3)
         else:
             save_json('StatusBarExtended.json', '{"enabled": true}')
+            show_status_message("Enabled StatusBarExtended", 3)
 
-        show_alert("StatusBarExtended plugin enabled: " + str(statusBarExtendedEnabled))
+        #show_alert("Toggled StatusBarExtended plugin")
 
 class StatusBarExtended(DirectoryPaneListener):
     def on_path_changed(self):
-        status_bar_message = ""
+        appData = getenv('APPDATA')
+        if path.isfile(appData + "\\fman\\Plugins\\User\\StatusBarExtended (Windows).json"):
+            statusBarExtendedEnabled = load_json('StatusBarExtended.json')
+            statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
+            if statusBarExtendedEnabledJson['enabled'] == True:
+                panes = self.pane.window.get_panes()
+                pane1 = panes[0].id
+                pane2 = panes[1].id
 
-        str_showHiddenFiles = str(load_json('Panes.json')[self.pane.id]['show_hidden_files'])
-        str_showHiddenFiles = "Show" if str_showHiddenFiles else "Hide"
-        status_bar_message += "Hidden files: " + str_showHiddenFiles + "\t\t"
+                statusbar_pane1 = "" #str(pane1) + "\t"
+                statusbar_pane2 = "" #str(pane2) + "\t"
 
-        '''
-        float_selectedFilesSize = 0
-        arr_selectedFiles = self.pane.get_selected_files()
+                pane1_show_hidden_files = load_json('Panes.json')[pane1]['show_hidden_files']
+                pane1_show_hidden_files = "Show" if pane1_show_hidden_files == True else "Hide"
+                statusbar_pane1 += "Hidden files: " + pane1_show_hidden_files + "\t\t"
 
-        if arr_selectedFiles:
-            int_selectedFilesAmount = len(arr_selectedFiles)
-            status_bar_message += "Selection: " + int_selectedFilesAmount + " files\t\t"
-            if int_selectedFilesAmount >= 1:
-                for file in arr_selectedFiles:
-                    float_selectedFilesSize = float_selectedFilesSize + stat(file).st_size
+                pane2_show_hidden_files = load_json('Panes.json')[pane2]['show_hidden_files']
+                pane2_show_hidden_files = "Show" if pane2_show_hidden_files == True else "Hide"
+                statusbar_pane2 += "Hidden files: " + pane2_show_hidden_files + "\t\t"
 
-            status_bar_message += "Total size: " + convert_bytes(float_selectedFilesSize) + "\t\t"
+                for p in panes:
+                    current_dir = p.get_path()
+                    dir_folders = 0
+                    dir_files = 0
+                    dir_filesize = 0
+                    dir_files_in_dir = glob.glob(current_dir + "/*")
+                    if dir_files_in_dir:
+                        for f in dir_files_in_dir:
+                            if path.isdir(f):
+                                dir_folders += 1
+                            else:
+                                dir_files += 1
+                                dir_filesize += stat(f).st_size
+                    if(p.id == pane1):
+                        statusbar_pane1 += "Subfolders: " + str(dir_folders) + "\t\t"
+                        statusbar_pane1 += "Files: " + str(dir_files) + "\t\t"
+                        statusbar_pane1 += "Filesize: " + str(convert_bytes(dir_filesize)) + "\t\t"
+                    else:
+                        statusbar_pane2 += "Subfolders: " + str(dir_folders) + "\t\t"
+                        statusbar_pane2 += "Files: " + str(dir_files) + "\t\t"
+                        statusbar_pane2 += "Filesize: " + str(convert_bytes(dir_filesize)) + "\t\t"
 
-        else:
-            status_bar_message += "No files selected \t - \t"
-        '''
+                show_status_message(statusbar_pane1 + "---\t\t" + statusbar_pane2, 5000)
+                clear_status_message()
 
-        currentDir = self.pane.get_path()
-        filesInDirAmount = 0
-        filesInDirSize = 0
-        filesInCurrentDir = glob.glob(currentDir+"/*.*")
-
-        if filesInCurrentDir:
-            for f in filesInCurrentDir:
-                filesInDirAmount = filesInDirAmount + 1
-                filesInDirSize = filesInDirSize + stat(f).st_size
-
-        status_bar_message += "Files in directory: " + str(filesInDirAmount) + "\t\t"
-        status_bar_message += "Total filesize: " + str(convert_bytes(filesInDirSize)) + "\t\t"
-
-        show_status_message(status_bar_message)
+                #show_status_message('{:>12}  {:>12}  {:>12}'.format(statusbar_pane1, ' - - ', statusbar_pane2))
