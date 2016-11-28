@@ -1,6 +1,5 @@
 from fman import DirectoryPaneCommand, DirectoryPaneListener, \
- show_status_message, load_json, save_json, \
- show_alert
+ show_status_message, load_json, save_json, show_alert
 from os import stat, path, getenv, listdir
 import json
 import glob
@@ -13,16 +12,13 @@ def convert_bytes(n):
 
 class ToggleStatusBarExtended(DirectoryPaneCommand):
     def __call__(self):
-        appData = getenv('APPDATA')
-        if path.isfile(appData + "\\fman\\Plugins\\User\\StatusBarExtended (Windows).json"):
-            statusBarExtendedEnabled = load_json('StatusBarExtended.json')
+        statusBarExtendedEnabled = load_json('StatusBarExtended.json')
+        if statusBarExtendedEnabled:
             statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
             if statusBarExtendedEnabledJson['enabled'] == True:
                 statusBarExtendedEnabled = 'true'
             else:
                 statusBarExtendedEnabled = 'false'
-        else:
-            statusBarExtendedEnabled = 'false'
 
         if statusBarExtendedEnabled == 'true':
             save_json('StatusBarExtended.json', '{"enabled": false}')
@@ -31,14 +27,12 @@ class ToggleStatusBarExtended(DirectoryPaneCommand):
             save_json('StatusBarExtended.json', '{"enabled": true}')
             show_status_message("Enabled StatusBarExtended", 3)
 
-        #show_alert("Toggled StatusBarExtended plugin")
-
 class StatusBarExtended(DirectoryPaneListener):
     def on_path_changed(self):
-        appData = getenv('APPDATA')
-        if path.isfile(appData + "\\fman\\Plugins\\User\\StatusBarExtended (Windows).json"):
-            statusBarExtendedEnabled = load_json('StatusBarExtended.json')
+        statusBarExtendedEnabled = load_json('StatusBarExtended.json')
+        if statusBarExtendedEnabled:
             statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
+
             if statusBarExtendedEnabledJson['enabled'] == True:
                 panes = self.pane.window.get_panes()
                 pane1 = panes[0].id
@@ -78,6 +72,3 @@ class StatusBarExtended(DirectoryPaneListener):
                         statusbar_pane2 += "Filesize: " + str(convert_bytes(dir_filesize)) + "\t\t"
 
                 show_status_message(statusbar_pane1 + "---\t\t" + statusbar_pane2, 5000)
-                clear_status_message()
-
-                #show_status_message('{:>12}  {:>12}  {:>12}'.format(statusbar_pane1, ' - - ', statusbar_pane2))
