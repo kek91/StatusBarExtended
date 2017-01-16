@@ -20,11 +20,15 @@ Turn the plugin on or off by using the keyboard shortcut, default is **F3**.
  - Clean up the json code mess - replace import python json with fmans builtin functions
  - ~~Include files without file extension as well (currently doing `glob *.*`)~~
  - Refresh status bar when toggling Show/Hide hidden files (`CTRL + .`).  
- Currently it only refreshes on `on_path_changed()`
+ Currently it only refreshes on `on_path_changed()` and when toggling the plugin (default key `F3`)
  - Make the status bar responsive (if possible, str.format() and str.rjust() doesn't apply)
  - ++
 
 **Changelog**
+
+- 16.01.2017:
+ - StatusBar shows immediately when toggled
+ 
 
 - 28.11.2016:
  - Cleaned code
