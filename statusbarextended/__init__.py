@@ -1,8 +1,11 @@
+# Main class for StatusBarExtended
+
 from fman import DirectoryPaneCommand, DirectoryPaneListener, \
  show_status_message, load_json, save_json, show_alert
 from os import stat, path, getenv, listdir
 import json
 import glob
+from byteconverter import ByteConverter
 
 def convert_bytes(n):
     for x in ['B', 'KB', 'MB', 'GB', 'TB']:
@@ -10,8 +13,8 @@ def convert_bytes(n):
             return "%3.1f %s" % (n, x)
         n /= 1024.0
 
+class StatusBarExtended(DirectoryPaneListener):
 
-class ShowStatusBarExtended(DirectoryPaneListener):
     def refresh(self):
         panes = self.pane.window.get_panes()
         pane1 = panes[0].id
@@ -40,40 +43,46 @@ class ShowStatusBarExtended(DirectoryPaneListener):
                     else:
                         dir_files += 1
                         dir_filesize += stat(f).st_size
+            bc = ByteConverter(dir_filesize)
             if(p.id == pane1):
-                statusbar_pane1 += "Subfolders: " + str(dir_folders) + "\t\t"
+                statusbar_pane1 += "Directories: " + str(dir_folders) + "\t\t"
                 statusbar_pane1 += "Files: " + str(dir_files) + "\t\t"
-                statusbar_pane1 += "Filesize: " + str(convert_bytes(dir_filesize)) + "\t\t"
+                statusbar_pane1 += "Filesize: " + str(bc.calc()) + "\t\t"
             else:
-                statusbar_pane2 += "Subfolders: " + str(dir_folders) + "\t\t"
+                statusbar_pane2 += "Directories: " + str(dir_folders) + "\t\t"
                 statusbar_pane2 += "Files: " + str(dir_files) + "\t\t"
-                statusbar_pane2 += "Filesize: " + str(convert_bytes(dir_filesize)) + "\t\t"
+                statusbar_pane2 += "Filesize: " + str(bc.calc()) + "\t\t"
 
         show_status_message(statusbar_pane1 + "---\t\t" + statusbar_pane2, 5000)
 
 
+    def show_selected_files(self):
+        selected = self.pane.get_selected_files()
+        dir_folders = 0
+        dir_files = 0
+        dir_filesize = 0
 
-class ToggleStatusBarExtended(DirectoryPaneCommand):
-    def __call__(self):
-        statusBarExtendedEnabled = load_json('StatusBarExtended.json')
-        if statusBarExtendedEnabled:
-            statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
-            if statusBarExtendedEnabledJson['enabled'] == True:
-                save_json('StatusBarExtended.json', '{"enabled": false}')
-                show_status_message("Disabled StatusBarExtended", 1)
-            else:
-                save_json('StatusBarExtended.json', '{"enabled": true}')
-                ShowStatusBarExtended.refresh(self)
+        if selected:
+            for f in selected:
+                if path.isdir(f):
+                    dir_folders += 1
+                else:
+                    dir_files += 1
+                    dir_filesize += stat(f).st_size
+
+            bc = ByteConverter(dir_filesize)
+            statusbar = str(dir_folders) + " directories \t\t"
+            statusbar += str(dir_files) + " files \t\t"
+            statusbar += str(bc.calc())
+            show_status_message(statusbar)
+
         else:
-            save_json('StatusBarExtended.json', '{"enabled": true}')
-            ShowStatusBarExtended.refresh(self)
+            StatusBarExtended.refresh(self)
 
 
-
-class StatusBarExtended(DirectoryPaneListener):
     def on_path_changed(self):
         statusBarExtendedEnabled = load_json('StatusBarExtended.json')
         if statusBarExtendedEnabled:
             statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
             if statusBarExtendedEnabledJson['enabled'] == True:
-                ShowStatusBarExtended.refresh(self)
+                StatusBarExtended.refresh(self)
