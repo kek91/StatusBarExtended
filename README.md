@@ -8,27 +8,23 @@ Turn the plugin on or off by using the keyboard shortcut, default is **F3**.
 
 **Features**
 
- - Show number of files/directories in current directory for both panes
- - Show total filesize for all files in current directory for both panes
- - Tell if hidden files are shown or hidden
+Adds extra information to the status bar.
 
-**Todo**
+ - Show number of directories and files/size in current directory for both panes
+ - Show "Toggle hidden files" status
+ - Show directories and files/size when selecting files
 
- - ~~Update status bar when switching pane~~
- - Progress bar for IO operations
- - Show number of files and filesize for currently selected files if any files are selected
- - Clean up the json code mess - replace import python json with fmans builtin functions
- - ~~Include files without file extension as well (currently doing `glob *.*`)~~
- - Refresh status bar when toggling Show/Hide hidden files (`CTRL + .`).  
- Currently it only refreshes on `on_path_changed()` and when toggling the plugin (default key `F3`)
- - Make the status bar responsive (if possible, str.format() and str.rjust() doesn't apply)
- - ++
 
 **Changelog**
 
+- 19.01.2017:
+ - Shows selected directores and files/filesize when selecting files
+ - Restructured code for readability
+
+
 - 16.01.2017:
  - StatusBar shows immediately when toggled
- 
+
 
 - 28.11.2016:
  - Cleaned code
@@ -44,13 +40,3 @@ fman v0.2.0 on elementaryOS.
 fman 0.1.0 on Windows 10:
 
 ![Screenshot Windows 10](fman-plugin-test-w10-2.png)
-
----
-
-** Screenshots old version **
-
-![Screenshot Windows 10](fman-plugin-test-w10.png)
-
-Windows 7:
-
-![Screenshot Windows 7](fman-plugin-test-w7.png)
