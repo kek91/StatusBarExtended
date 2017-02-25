@@ -6,6 +6,7 @@ from os import stat, path, getenv, listdir
 import json
 import glob
 from byteconverter import ByteConverter
+#from PyQt5.QtWidgets import QApplication
 
 def convert_bytes(n):
     for x in ['B', 'KB', 'MB', 'GB', 'TB']:
@@ -24,11 +25,11 @@ class StatusBarExtended(DirectoryPaneListener):
 
         pane1_show_hidden_files = load_json('Panes.json')[pane1]['show_hidden_files']
         pane1_show_hidden_files = "Show" if pane1_show_hidden_files == True else "Hide"
-        statusbar_pane1 += "Hidden files: " + pane1_show_hidden_files + "\t\t"
+        statusbar_pane1 += "Hidden files: " + pane1_show_hidden_files + ",   "
 
         pane2_show_hidden_files = load_json('Panes.json')[pane2]['show_hidden_files']
         pane2_show_hidden_files = "Show" if pane2_show_hidden_files == True else "Hide"
-        statusbar_pane2 += "Hidden files: " + pane2_show_hidden_files + "\t\t"
+        statusbar_pane2 += "Hidden files: " + pane2_show_hidden_files + ",   "
 
         for p in panes:
             current_dir = p.get_path()
@@ -45,15 +46,20 @@ class StatusBarExtended(DirectoryPaneListener):
                         dir_filesize += stat(f).st_size
             bc = ByteConverter(dir_filesize)
             if(p.id == pane1):
-                statusbar_pane1 += "Directories: " + str(dir_folders) + "\t\t"
-                statusbar_pane1 += "Files: " + str(dir_files) + "\t\t"
-                statusbar_pane1 += "Filesize: " + str(bc.calc()) + "\t\t"
+                statusbar_pane1 += "Dirs: " + str(dir_folders) + ",   " # \t\t
+                statusbar_pane1 += "Files: " + str(dir_files) + ",   "
+                statusbar_pane1 += "Size: " + str(bc.calc()) + ""
             else:
-                statusbar_pane2 += "Directories: " + str(dir_folders) + "\t\t"
-                statusbar_pane2 += "Files: " + str(dir_files) + "\t\t"
-                statusbar_pane2 += "Filesize: " + str(bc.calc()) + "\t\t"
+                statusbar_pane2 += "Dirs: " + str(dir_folders) + ",   "
+                statusbar_pane2 += "Files: " + str(dir_files) + ",   "
+                statusbar_pane2 += "Size: " + str(bc.calc()) + ""
 
-        show_status_message(statusbar_pane1 + "---\t\t" + statusbar_pane2, 5000)
+        
+       
+        # TODO - simulate responsiveness
+        # QApplication::activeWindow(), get width, if > X... etc
+
+        show_status_message('{:<25}  {:>140}'.format(statusbar_pane1, statusbar_pane2), 5000)
 
 
     def show_selected_files(self):
