@@ -17,6 +17,10 @@ Adds extra information to the status bar.
 
 **Changelog**
 
+- 25.02.2017:
+ - Align text to the left and right for the respective panes
+ - Reduce text to make the status bar smaller thus allowing resizing window smaller
+
 - 19.01.2017:
  - Shows selected directores and files/filesize when selecting files
  - Restructured code for readability
@@ -32,6 +36,10 @@ Adds extra information to the status bar.
 
 
 **Screenshots**
+
+fman v0.2.9 on Ubuntu 16.04.
+
+![Screenshot Ubuntu 16.04](fman-plugin-ubuntu-2.9.png)
 
 fman v0.2.0 on elementaryOS.
 
