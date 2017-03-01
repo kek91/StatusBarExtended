@@ -82,10 +82,3 @@ class StatusBarExtended(DirectoryPaneListener):
             statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
             if statusBarExtendedEnabledJson['enabled'] == True:
                 StatusBarExtended.refresh(self)
-
-
-class ToggleHiddenFiles(DirectoryPaneListener):
-    def toggle_hidden_files(self):
-        show_status_message("toggled")
-        StatusBarExtended.refresh(self)
-        return self.pane_info['show_hidden_files']
