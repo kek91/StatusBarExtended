@@ -15,7 +15,24 @@ Adds extra information to the status bar.
  - Show directories and files/size when selecting files
 
 
+
+**Preview**
+
+fman v0.3.0
+
+![Screenshot Win 10 v0.3.0](fman-plugin-statusbarextended-v0.3.0.png)
+
+fman v0.2.9 on Ubuntu 16.04.
+
+![Screenshot Ubuntu 16.04](fman-plugin-ubuntu-2.9.png)
+
+
 **Changelog**
+
+- 01.03.2017:
+ - Shows output only for the currently active pane due to layout/resize issues 
+ - Don't display "Files: n" and "Size: n xB" if there are 0 files in current directory
+ - Hidden status is visualized by checkmark or cross
 
 - 25.02.2017:
  - Align text to the left and right for the respective panes
@@ -33,18 +50,3 @@ Adds extra information to the status bar.
 - 28.11.2016:
  - Cleaned code
  - Should work in all 3 supported OS (tested on Windows and Linux only)
-
-
-**Screenshots**
-
-fman v0.2.9 on Ubuntu 16.04.
-
-![Screenshot Ubuntu 16.04](fman-plugin-ubuntu-2.9.png)
-
-fman v0.2.0 on elementaryOS.
-
-![Screenshot ElementaryOS](fman-plugin-statusbarextended-elementaryos.png)
-
-fman 0.1.0 on Windows 10:
-
-![Screenshot Windows 10](fman-plugin-test-w10-2.png)
