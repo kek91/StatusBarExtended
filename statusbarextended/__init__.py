@@ -35,7 +35,10 @@ class StatusBarExtended(DirectoryPaneListener):
                     dir_folders += 1
                 else:
                     dir_files += 1
-                    dir_filesize += stat(f).st_size
+                    try:
+                        dir_filesize += stat(f).st_size
+                    except Exception as e:
+                        continue
         
         bc = ByteConverter(dir_filesize)
         if(pane == self.pane.window.get_panes()[0].id):
