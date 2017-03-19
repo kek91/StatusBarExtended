@@ -18,7 +18,7 @@ class StatusBarExtended(DirectoryPaneListener):
 
     def refresh(self):
 
-        pane = self.pane.id
+        pane = self.pane.window.get_panes().index(self.pane)
         statusbar_pane = ""
 
         pane_show_hidden_files = load_json('Panes.json')[pane]['show_hidden_files']
@@ -41,7 +41,7 @@ class StatusBarExtended(DirectoryPaneListener):
                         continue
         
         bc = ByteConverter(dir_filesize)
-        if(pane == self.pane.window.get_panes()[0].id):
+        if(self.pane == self.pane.window.get_panes()[0]):
             statusbar_pane += "Pane: Left     "
         else:
             statusbar_pane += "Pane: Right     "
