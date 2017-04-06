@@ -8,12 +8,6 @@ import glob
 from byteconverter import ByteConverter
 #from PyQt5.QtWidgets import QApplication
 
-def convert_bytes(n):
-    for x in ['B', 'KiB', 'MiB', 'GiB', 'TiB']:
-        if n < 1024.0:
-            return "%3.1f %s" % (n, x)
-        n /= 1024.0
-
 class StatusBarExtended(DirectoryPaneListener):
 
     def refresh(self):
