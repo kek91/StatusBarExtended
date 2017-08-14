@@ -33,40 +33,42 @@ class StatusBarExtended(DirectoryPaneListener):
                         dir_filesize += stat(f).st_size
                     except Exception as e:
                         continue
-        
+
         bc = ByteConverter(dir_filesize)
+        dir_foldersK	= str("{0:,}".format(dir_folders))	# old use str(dir_folders)
+        dir_filesK  	= str("{0:,}".format(dir_files))  	# ' ' instead of ',' .replace(',', ' ')
         if(self.pane == self.pane.window.get_panes()[0]):
-            statusbar_pane += "Pane: Left     "
+            statusbar_pane += "Pane: Left  "
         else:
-            statusbar_pane += "Pane: Right     "
-        statusbar_pane += "" + pane_show_hidden_files + "     "
-        statusbar_pane += "Dirs: " + str(dir_folders) + "     "
+            statusbar_pane += "Pane: Right "
+        statusbar_pane += ""      	+ pane_show_hidden_files    	+ "    "
+        statusbar_pane += "Dirs: "	+ dir_foldersK.rjust(3, ' ')	+ "    "
         if dir_files > 0:
-            statusbar_pane += "Files: " + str(dir_files) + "     "
-            statusbar_pane += "Size: " + str(bc.calc()) + "     "
+            statusbar_pane += "Files: "	+ dir_filesK.rjust(4, ' ')    	+ "    "
+            statusbar_pane += "Size: " 	+ str(bc.calc()).rjust(7, ' ')	+ "    "
 
         show_status_message(statusbar_pane, 5000)
 
 
     def show_selected_files(self):
-        selected = self.pane.get_selected_files()
-        dir_folders = 0
-        dir_files = 0
-        dir_filesize = 0
+        selected    	= self.pane.get_selected_files()
+        dir_folders 	= 0
+        dir_files   	= 0
+        dir_filesize	= 0
 
         if selected:
             for f in selected:
                 if path.isdir(f):
                     dir_folders += 1
                 else:
-                    dir_files += 1
-                    dir_filesize += stat(f).st_size
+                    dir_files   	+= 1
+                    dir_filesize	+= stat(f).st_size
 
             bc = ByteConverter(dir_filesize)
-            statusbar = str(dir_folders) + " directories, "
-            statusbar += str(dir_files) + " files "
+            statusbar  = str(dir_folders).rjust(3, ' ')	+ " directories, "
+            statusbar += str(dir_files).rjust(4, ' ')  	+ " files "
             statusbar += "selected - "
-            statusbar += "total filesize: " + str(bc.calc())
+            statusbar += "total filesize: " + str(bc.calc()).rjust(7, ' ')
             show_status_message(statusbar)
 
         else:
