@@ -16,8 +16,8 @@ class StatusBarExtended(DirectoryPaneListener):
         statusbar_pane = ""
 
         pane_show_hidden_files = load_json('Panes.json')[pane]['show_hidden_files']
-        pane_show_hidden_files = "✓" if pane_show_hidden_files == True else "X"
-
+        pane_show_hidden_files = "◻" if pane_show_hidden_files == True else "◼"
+        #alternative icons: 👁◎◉✓✗
         current_dir = self.pane.get_path()
         dir_folders = 0
         dir_files = 0
