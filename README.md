@@ -24,11 +24,11 @@ Adds extra information to the status bar.
 
 **Changelog**
 
-**v0.1.1f - 15.07.2017:**
+**v0.1.1f - 15.08.2017:**
 
 - Shorter size indicators with lower-case for (kilo)bytes: `b, k, M, G, T`. Kibibyte (`2^10`) format is preserved
 - Change status icon of hidden files toggle to ◻white (hidden files shown) and ◼black (hidden files hidden) Unicode square symbols
-- Align all indicator position to keep it the same regardless of the lenght of the indicator (file/folder count is consistent up to `9,999`)
+- Align all indicator position to keep it the same regardless of the length of the indicator (file/folder count is consistent up to `9,999`)
 - Remove empty folder/file numbers indicators (including labels)
 ![Toolbar only screenshot with a custom theme v0.1.1f](fman-plugin-StatusBarExtendedF.png)
 - Add thousands separator (`,`) to file/folder numbers (e.g. `Files: 1,000`)
