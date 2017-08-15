@@ -44,7 +44,7 @@ class StatusBarExtended(DirectoryPaneListener):
         statusbar_pane += ""      	+ pane_show_hidden_files    	+ "    "
         statusbar_pane += "Dirs: "	+ dir_foldersK.rjust(3, ' ')	+ "    "
         if dir_files > 0:
-            statusbar_pane += "Files: "	+ dir_filesK.rjust(4, ' ')    	+ "    "
+            statusbar_pane += "Files: "	+ dir_filesK.rjust(5, ' ')    	+ "    "
             statusbar_pane += "Size: " 	+ str(bc.calc()).rjust(7, ' ')	+ "    "
 
         show_status_message(statusbar_pane, 5000)
@@ -65,8 +65,10 @@ class StatusBarExtended(DirectoryPaneListener):
                     dir_filesize	+= stat(f).st_size
 
             bc = ByteConverter(dir_filesize)
-            statusbar  = str(dir_folders).rjust(3, ' ')	+ " directories, "
-            statusbar += str(dir_files).rjust(4, ' ')  	+ " files "
+            dir_foldersK    = str("{0:,}".format(dir_folders))  # old use str(dir_folders)
+            dir_filesK      = str("{0:,}".format(dir_files))    # ' ' instead of ',' .replace(',', ' ')
+            statusbar  = dir_foldersK.rjust(3, ' ')	+ " directories, "
+            statusbar += dir_filesK.rjust(5, ' ')  	+ " files "
             statusbar += "selected - "
             statusbar += "total filesize: " + str(bc.calc()).rjust(7, ' ')
             show_status_message(statusbar)
