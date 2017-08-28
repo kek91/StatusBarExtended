@@ -24,7 +24,7 @@ Adds extra information to the status bar.
 
 **Changelog**
 
-**v0.1.1f - 15.08.2017:**
+**v0.1.2 - 15.08.2017:**
 
 - Shorter size indicators with lower-case for (kilo)bytes: `b, k, M, G, T`. Kibibyte (`2^10`) format is preserved
 - Change status icon of hidden files toggle to ◻white (hidden files shown) and ◼black (hidden files hidden) Unicode square symbols
