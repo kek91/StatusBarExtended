@@ -19,7 +19,9 @@ Adds extra information to the status bar.
 
 **Preview**
 
-![Screenshot Win 10 v0.3.0](fman-plugin-statusbarextended-v0.3.0.png)
+Status Bar without selection                                           |  Status Bar with selection
+:---------------------------------------------------------------------:|:----------------------------------------:
+![Screenshot Win 10 v0.1.2](fman-plugin-statusbarextended-v0.1.2.png)  |  ![Screenshot Win 10 v0.1.2-selection](fman-plugin-statusbarextended-select-v0.1.2.png)
 
 
 **Changelog**
