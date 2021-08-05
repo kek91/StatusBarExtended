@@ -21,7 +21,7 @@ Adds extra information to the status bar.
 
 |       Status Bar without selection       |        Status Bar with selection         |
 | :--------------------------------------: | :--------------------------------------: |
-| ![Screenshot Win 10 v0.1.2](fman-plugin-statusbarextended-v0.1.2.png) | ![Screenshot Win 10 v0.1.2-selection](fman-plugin-statusbarextended-select-v0.1.2.png) |
+| ![Screenshot macOS 10 v0.2.1](fman-plugin-statusbarextended-v0.2.1.png) | ![Screenshot macOS 10 v0.2.1-selection](fman-plugin-statusbarextended-select-v0.2.1.png) |
 
 
 
