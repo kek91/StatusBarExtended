@@ -27,7 +27,7 @@ Adds extra information to the status bar.
 
 **Changelog**
 
-**v0.1.2 - 5.08.2021:**
+**v0.2.0 - 5.08.2021:**
 
 - Works again with the latest fman version (`1.7.3`) and its new file system API ([blog](https://fman.io/blog/fmans-new-file-system-api/), [API](https://fman.io/docs/api#FileSystem))
 
