@@ -24,6 +24,10 @@ Adds extra information to the status bar.
 | ![Screenshot macOS 10 v0.2.1](fman-plugin-statusbarextended-v0.2.1.png) | ![Screenshot macOS 10 v0.2.1-selection](fman-plugin-statusbarextended-select-v0.2.1.png) |
 
 
+__Known issues__
+
+- Alignment of indicators only works for monospaced (fixed-width) fonts since it's currently implemented using regular spaces (tip: you can change this font in a theme)
+- Status bar is NOT updated when moving to another pane (only when path is changed within the active pane) since plugins can't notice a pane switch due to a lack of the [necessary APIs](https://github.com/fman-users/fman/issues/292#issuecomment-360036718)
 
 **Changelog**
 
