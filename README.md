@@ -31,6 +31,7 @@ __Known issues__
 
 **Changelog**
 
+**v0.2.1 - 5.08.2021:**
 
 - Changed the currently active pane indicator from `Pane: Left`/`Pane: Right` to `◧`/`◨` 
 - Aligned the `Dirs:`/`Files:` indicators with and without selection
