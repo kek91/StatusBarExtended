@@ -48,9 +48,9 @@ class StatusBarExtended(DirectoryPaneListener):
         dir_foldersK   = str("{0:,}".format(dir_folders))  # old use str(dir_folders)
         dir_filesK     = str("{0:,}".format(dir_files))    # ' ' instead of ',' .replace(',', ' ')
         if(self.pane == self.pane.window.get_panes()[0]):
-            statusbar_pane      += "Pane: Left  "
+            statusbar_pane      += "◧"
         else:
-            statusbar_pane      += "Pane: Right "
+            statusbar_pane      += "◨"
         statusbar_pane          += ""        + pane_show_hidden_files             + "    "
         if dir_folders == 0:
             statusbar_pane      += "      "  + ''.rjust(Just.Fd, ' ')             + "    "
