@@ -10,10 +10,10 @@ Turn the plugin on or off by using the keyboard shortcut, default is **F3**.
 
 Adds extra information to the status bar.
 
-- Show number of directories and files/size in current directory for both panes
-- Show "Toggle hidden files" status
-- Show directories and files/size when selecting files
 
+- Show the number of directories/files and the total size of files in the current directory for both panes
+- Show "Toggle hidden files" status (`◻` shown `◼` hidden)
+- Show the number of selected directories/files and the total size of selected files
 
 
 
@@ -27,10 +27,14 @@ Adds extra information to the status bar.
 
 **Changelog**
 
+**v0.1.2 - 5.08.2021:**
+
+- Works again with the latest fman version (`1.7.3`) and its new file system API ([blog](https://fman.io/blog/fmans-new-file-system-api/), [API](https://fman.io/docs/api#FileSystem))
+
 **v0.1.2 - 15.08.2017:**
 
 - Shorter size indicators with lower-case for (kilo)bytes: `b, k, M, G, T`. Kibibyte (`2^10`) format is preserved
-- Change status icon of hidden files toggle to ◻white (hidden files shown) and ◼black (hidden files hidden) Unicode square symbols
+- Change the status icon of hidden files toggle to `◻`white (hidden files shown) and `◼`black (hidden files hidden) Unicode square symbols
 - Align all indicator position to keep it the same regardless of the length of the indicator (file/folder count is consistent up to `9,999`)
 - Remove empty folder/file numbers indicators (including labels)
 ![Toolbar only screenshot with a custom theme v0.1.1f](fman-plugin-StatusBarExtendedF.png)
