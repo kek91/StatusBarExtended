@@ -10,10 +10,10 @@ Turn the plugin on or off by using the keyboard shortcut, default is **F3**.
 
 Adds extra information to the status bar.
 
-
 - Show the number of directories/files and the total size of files in the current directory for both panes
 - Show "Toggle hidden files" status (`◻` shown `◼` hidden)
 - Show the number of selected directories/files and the total size of selected files
+- Show the currently active pane indicator (`◧` left `◨` right)
 
 
 
@@ -26,6 +26,10 @@ Adds extra information to the status bar.
 
 
 **Changelog**
+
+
+- Changed the currently active pane indicator from `Pane: Left`/`Pane: Right` to `◧`/`◨` 
+- Aligned the `Dirs:`/`Files:` indicators with and without selection
 
 **v0.2.0 - 5.08.2021:**
 
