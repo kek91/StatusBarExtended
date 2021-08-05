@@ -3,6 +3,7 @@
 from fman import DirectoryPaneCommand, DirectoryPaneListener, \
  show_status_message, load_json, save_json, show_alert
 from os import stat, path, getenv
+from fman.url import as_url, as_human_readable
 import json
 import glob
 from byteconverter import ByteConverter
@@ -23,10 +24,11 @@ class StatusBarExtended(DirectoryPaneListener):
         pane_show_hidden_files = load_json('Panes.json')[pane]['show_hidden_files']
         pane_show_hidden_files = "◻" if pane_show_hidden_files == True else "◼"
         #alternative icons: 👁◎◉✓✗
-        current_dir   = self.pane.get_path()
-        dir_folders   = 0
-        dir_files     = 0
-        dir_filesize  = 0
+        cur_dir_url      = self.pane.get_path()
+        current_dir      = as_human_readable(cur_dir_url)
+        dir_folders      = 0
+        dir_files        = 0
+        dir_filesize     = 0
         dir_files_in_dir = glob.glob(current_dir + "/*")
         if dir_files_in_dir:
             for f in dir_files_in_dir:
@@ -72,6 +74,7 @@ class StatusBarExtended(DirectoryPaneListener):
 
         if selected:
             for f in selected:
+                f = as_human_readable(f)
                 if path.isdir(f):
                     dir_folders     += 1
                 else:
