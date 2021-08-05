@@ -9,9 +9,9 @@ from byteconverter import ByteConverter
 #from PyQt5.QtWidgets import QApplication
 
 class Just: # Justify elements in the status bar
-    Fd = 5 # Justify Folder format: up to 9,999
-    Fl = 5 # Justify Folder format: up to 9,999
-    Sz = 7 # Justify Size format:   up to 999.0 b
+    Fd = 5  # Justify Folder format: 5 symbols — up to 9,999
+    Fl = 5  # Justify File   format: 5 symbols — up to 9,999
+    Sz = 7  # Justify Size   format: 7 symbols — up to 999.0 b
 
 class StatusBarExtended(DirectoryPaneListener):
 
