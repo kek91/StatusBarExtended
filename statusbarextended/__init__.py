@@ -2,8 +2,8 @@
 
 from fman import DirectoryPaneCommand, DirectoryPaneListener, \
  show_status_message, load_json, save_json, show_alert
-from os import stat, path, getenv
 from fman.url import as_url, as_human_readable
+from fman.fs import is_dir, query
 import json
 import glob
 from byteconverter import ByteConverter
@@ -30,14 +30,17 @@ class StatusBarExtended(DirectoryPaneListener):
         dir_files        = 0
         dir_filesize     = 0
         dir_files_in_dir = glob.glob(current_dir + "/*")
+        f_url            = ""
+
         if dir_files_in_dir:
             for f in dir_files_in_dir:
-                if path.isdir(f):
+                f_url = as_url(f)
+                if is_dir(f_url):
                     dir_folders      += 1
                 else:
                     dir_files        += 1
                     try:
-                        dir_filesize += stat(f).st_size
+                        dir_filesize += query(f_url, 'size_bytes')
                     except Exception as e:
                         continue
 
@@ -74,12 +77,11 @@ class StatusBarExtended(DirectoryPaneListener):
 
         if selected:
             for f in selected:
-                f = as_human_readable(f)
-                if path.isdir(f):
+                if is_dir(f):
                     dir_folders     += 1
                 else:
                     dir_files       += 1
-                    dir_filesize    += stat(f).st_size
+                    dir_filesize    += query(f, 'size_bytes')
 
             bc = ByteConverter(dir_filesize)
             dir_foldersK   = str("{0:,}".format(dir_folders)) # old use str(dir_folders)
