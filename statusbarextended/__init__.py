@@ -53,11 +53,11 @@ class StatusBarExtended(DirectoryPaneListener):
             statusbar_pane      += "◨"
         statusbar_pane          += "   "     + pane_show_hidden_files             + "     "
         if     dir_folders > 0:
-            statusbar_pane      += "Dirs:"   +      dir_foldK.rjust(Just.Fd, ' ') + "  "
+            statusbar_pane      += "Dirs: "  +      dir_foldK.rjust(Just.Fd, ' ') + "  "
             if dir_folders <= 9999:
                 statusbar_pane  += " "
         else:
-            statusbar_pane      += "     "   +             ''.rjust(Just.Fd, ' ') + "   "
+            statusbar_pane      += "      "  +             ''.rjust(Just.Fd, ' ') + "   "
         if     dir_files > 0:
             statusbar_pane      += "Files: " +      dir_fileK.rjust(Just.Fl, ' ') + "   "
             if dir_files <= 9999:
@@ -88,11 +88,11 @@ class StatusBarExtended(DirectoryPaneListener):
             dir_fileK  = str("{0:,}".format(dir_files))
             statusbar  = "Selected* "
             if     dir_folders > 0:
-                statusbar      += "Dirs:"    +      dir_foldK.rjust(Just.Fd, ' ') + "  "
+                statusbar      += "Dirs: "   +      dir_foldK.rjust(Just.Fd, ' ') + "  "
                 if dir_folders <= 9999:
                     statusbar  += " "
             else:
-                statusbar      += "     "    +             ''.rjust(Just.Fd, ' ') + "   "
+                statusbar      += "      "   +             ''.rjust(Just.Fd, ' ') + "   "
             if     dir_files > 0:
                 statusbar      += "Files: "  +      dir_fileK.rjust(Just.Fl, ' ') + "   "
                 if dir_files <= 9999:
