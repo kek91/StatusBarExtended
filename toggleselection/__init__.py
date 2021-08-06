@@ -62,7 +62,13 @@ class CommandEmpty(): # to avoid duplicate command execution (and "return '', ar
 
 class SelectionOverride(DirectoryPaneListener):
     def on_command(self, command_name, args):
+        if   command_name in ('switch_panes'):
+            pane_cur = self.pane
+            pane_opp = _get_opposite_pane(self.pane)
+            pane_opp.focus()    # doesn't change self.pane, so...
+            self.pane=pane_opp  # ...need to do it manually...
             self.show_selected_files()
+            self.pane=pane_cur  # ...and restore after the statusbar update
             return 'command_empty', args
         elif command_name in (
             'select_all', 'deselect',
