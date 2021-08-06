@@ -15,16 +15,21 @@ Adds extra information to the status bar.
 - Show the number of selected directories/files and the total size of selected files
 - Show the currently active pane indicator (`◧` left `◨` right)
 
+Aligns indicator positions to avoid "jitter" on selection/navigation
 
 
 **Preview**
 
 |       Status Bar without selection       |        Status Bar with selection         |
 | :--------------------------------------: | :--------------------------------------: |
-| ![Screenshot macOS 10 v0.2.1](fman-plugin-statusbarextended-v0.2.1.png) | ![Screenshot macOS 10 v0.2.1-selection](fman-plugin-statusbarextended-select-v0.2.1.png) |
+| ![Screenshot macOS 10 v0.3.0](fman-plugin-statusbarextended-v0.3.0.png) | ![Screenshot macOS 10 v0.3.0-selection](fman-plugin-statusbarextended-select-v0.3.0.png) |
 
+|       Status Bar alignment       |
+| :------------------------------: |
+| ![Screenshot of alignment](fman-plugin-StatusBarExtendedF.png) |
 
 __Known issues__
 
 - Alignment of indicators only works for monospaced (fixed-width) fonts since it's currently implemented using regular spaces (tip: you can change this font in a theme)
 - Status bar is NOT updated when moving to another pane with a mouse since plugins can't notice a pane switch due to a lack of the [necessary APIs](https://github.com/fman-users/fman/issues/292#issuecomment-360036718)
+- Status bar is NOT updated when a visible hidden file is selected and then hidden via `Toggle hidden files`
