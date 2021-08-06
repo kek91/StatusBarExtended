@@ -30,7 +30,9 @@ class StatusBarExtended(DirectoryPaneListener):
         dir_folders      = 0
         dir_files        = 0
         dir_filesize     = 0
-        dir_files_in_dir = glob.glob(current_dir + "/*")
+        dir_files_in_dir    = glob.glob(current_dir + "/*")
+        if cfg_show_hidden_files == True:
+          dir_files_in_dir += glob.glob(current_dir + "/.*")
         f_url            = ""
 
         if dir_files_in_dir:
