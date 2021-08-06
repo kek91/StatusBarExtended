@@ -56,7 +56,7 @@ def _get_opposite_pane(pane):
 
 
 
-class CommandEmpty(): # to avoid duplicate command execution (and "return '', args" hangs)
+class CommandEmpty(DirectoryPaneCommand): # to avoid duplicate command execution (and "return '', args" hangs)
     def __call__(self):
         pass
 
@@ -69,20 +69,20 @@ class SelectionOverride(DirectoryPaneListener):
             self.pane=pane_opp  # ...need to do it manually...
             self.show_selected_files()
             self.pane=pane_cur  # ...and restore after the statusbar update
-            return 'command_empty', args
+            return 'command_empty', {}
         elif command_name in (
             'select_all', 'deselect',
             'toggle_hidden_files'):
             getattr(_CorePaneCommand, command_name)(self)
             self.show_selected_files()
-            return 'command_empty', args
+            return 'command_empty', {}
         elif command_name in ( # commands that can pass a 'toggle_selection' argument
             'move_cursor_down'     , 'move_cursor_up'     ,
             'move_cursor_page_down', 'move_cursor_page_up',
             'move_cursor_home'     , 'move_cursor_end'):
             getattr(_CorePaneCommand, command_name)(self, args)
             self.show_selected_files()
-            return 'command_empty', args
+            return 'command_empty', {}
 
     def show_selected_files(self):
         statusBarExtendedEnabled = load_json('StatusBarExtended.json')
