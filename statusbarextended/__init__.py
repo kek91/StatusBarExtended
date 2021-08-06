@@ -18,12 +18,13 @@ class StatusBarExtended(DirectoryPaneListener):
 
     def refresh(self):
 
-        pane = self.pane.window.get_panes().index(self.pane)
-        statusbar_pane = ""
+        panes            = self.pane.window.get_panes()
+        pane_id          = panes.index(self.pane)
+        statusbar_pane   = ""
 
-        pane_show_hidden_files = load_json('Panes.json')[pane]['show_hidden_files']
-        pane_show_hidden_files = "◻" if pane_show_hidden_files == True else "◼"
-        #alternative icons: 👁◎◉✓✗
+        cfg_show_hidden_files  = load_json('Panes.json')[pane_id]['show_hidden_files']
+        pane_show_hidden_files = "◻" if cfg_show_hidden_files == True else "◼"
+        #alternative icons: 👁🐵🙈◎◉✓✗
         cur_dir_url      = self.pane.get_path()
         current_dir      = as_human_readable(cur_dir_url)
         dir_folders      = 0
