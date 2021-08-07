@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file
 
 [unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.0...HEAD
 ## [Unreleased]
+
+## [v0.3.0 — 07.08.2021]
+   [v0.3.0 — 07.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.3.0
   - __Fixed__
     + :beetle: Hidden files not counted even when they're shown
     + :beetle: Not updating on pane changes via keyboard `switch_panes` command (e.g. with a <kbd>Tab</kbd>)
