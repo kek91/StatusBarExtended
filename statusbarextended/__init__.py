@@ -88,18 +88,30 @@ class StatusBarExtended(DirectoryPaneListener):
         show_status_message(statusbar_pane, 5000)
 
     def show_selected_files(self):
+        panes           = self.pane.window.get_panes()
+        pane_id         = panes.index(self.pane)
+        cfg_show_hidden_files  = load_json('Panes.json')[pane_id]['show_hidden_files']
         selected        = self.pane.get_selected_files()
         dir_folders     = 0
         dir_files       = 0
         dir_filesize    = 0
 
         if selected:
-            for f in selected:
-                if is_dir(f):
-                    dir_folders     += 1
-                else:
-                    dir_files       += 1
-                    dir_filesize    += query(f, 'size_bytes')
+            if cfg_show_hidden_files:
+                for f in selected:
+                    if is_dir(f):
+                        dir_folders     += 1
+                    else:
+                        dir_files       += 1
+                        dir_filesize    += query(f, 'size_bytes')
+            else:
+                for f in selected:
+                    if not is_hidden(as_human_readable(f)):
+                        if is_dir(f):
+                            dir_folders     += 1
+                        else:
+                            dir_files       += 1
+                            dir_filesize    += query(f, 'size_bytes')
 
             bc = ByteConverter(dir_filesize)
             dir_foldK  = "{0:,}".format(dir_folders)
