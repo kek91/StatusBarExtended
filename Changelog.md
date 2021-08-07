@@ -1,28 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file
 
-[unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.0...HEAD
 ## [Unreleased]
+  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.0...HEAD
 
 ## [v0.3.0 — 07.08.2021]
-   [v0.3.0 — 07.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.3.0
+  [ v0.3.0 — 07.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.3.0
   - __Fixed__
     + :beetle: Hidden files not counted even when they're shown
     + :beetle: Not updating on pane changes via keyboard `switch_panes` command (e.g. with a <kbd>Tab</kbd>)
 
 ## [v0.2.1 — 05.08.2021]
-   [v0.2.1 — 05.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.2.1
+  [ v0.2.1 — 05.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.2.1
   - __Changed__
     + The currently active pane indicator from `Pane: Left`/`Pane: Right` to `◧`/`◨` 
     + The `Dirs:`/`Files:` indicators' to align with and without selection
 
 ## [v0.2.0 — 05.08.2021]
-   [v0.2.0 — 05.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.2.0
+  [ v0.2.0 — 05.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.2.0
   - __Fixed__
     + :beetle: Not working with the latest fman version (`1.7.3`) and its new file system API ([blog](https://fman.io/blog/fmans-new-file-system-api/), [API](https://fman.io/docs/api#FileSystem))
 
 ## [v0.1.2 — 15.08.2017]
-   [v0.1.2 — 15.08.2017]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.1.2
+  [ v0.1.2 — 15.08.2017]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.1.2
   - Shorter size indicators with lower-case for (kilo)bytes: `b, k, M, G, T`. Kibibyte (`2^10`) format is preserved
   - Change the status icon of hidden files toggle to `◻`white (hidden files shown) and `◼`black (hidden files hidden) Unicode square symbols
   - Align all indicator position to keep it the same regardless of the length of the indicator (file/folder count is consistent up to `9,999`)
@@ -32,11 +32,11 @@ All notable changes to this project will be documented in this file
   - Change status of selected items to be consistent with the regular view for faster read
 
 ## [v0.1.1 — 06.04.2017]
-   [v0.1.1 — 06.04.2017]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.1.1
+  [ v0.1.1 — 06.04.2017]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.1.1
   - Show binary prefix instead of decimal for file size
 
 ## [v0.1.0 — 01.03.2017]
-   [v0.1.0 — 01.03.2017]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.1.0
+  [ v0.1.0 — 01.03.2017]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.1.0
   - Shows output only for the currently active pane due to layout/resize issues 
   - Don't display "Files: n" and "Size: n xB" if there are 0 files in current directory
   - Hidden status is visualized by checkmark or cross
