@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file
 
 ## [Unreleased]
   [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.0...HEAD
+  - __Fixed__
+    + :beetle: Hidden non-dotfiles always counted; (Windows) dotfiles (even without the 'hidden' attribute) not counted if option is set to hide
 
 ## [v0.3.0 — 07.08.2021]
   [ v0.3.0 — 07.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.3.0

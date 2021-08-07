@@ -1,9 +1,10 @@
 # Main class for StatusBarExtended
 
 from fman import DirectoryPaneCommand, DirectoryPaneListener, \
- show_status_message, load_json, save_json, show_alert
+ show_status_message, load_json, save_json, PLATFORM
 from fman.url import as_url, as_human_readable
 from fman.fs import is_dir, query
+from core.commands.util import is_hidden # works on file_paths, not urls
 import json
 import glob
 from byteconverter import ByteConverter
@@ -23,29 +24,43 @@ class StatusBarExtended(DirectoryPaneListener):
         statusbar_pane   = ""
 
         cfg_show_hidden_files  = load_json('Panes.json')[pane_id]['show_hidden_files']
-        pane_show_hidden_files = "◻" if cfg_show_hidden_files == True else "◼"
-        #alternative icons: 👁🐵🙈◎◉✓✗
+        pane_show_hidden_files = "◻" if cfg_show_hidden_files else "◼" # alt: 👁🐵🙈◎◉✓✗
         cur_dir_url      = self.pane.get_path()
         current_dir      = as_human_readable(cur_dir_url)
         dir_folders      = 0
         dir_files        = 0
         dir_filesize     = 0
-        dir_files_in_dir    = glob.glob(current_dir + "/*")
-        if cfg_show_hidden_files == True:
-          dir_files_in_dir += glob.glob(current_dir + "/.*")
+        dir_files_in_dir      = glob.glob(current_dir + "/*")
+        if PLATFORM == 'Windows':   # .dotfile=regular (use 'hidden' attr to hide)
+            dir_files_in_dir += glob.glob(current_dir + "/.*")
+        elif cfg_show_hidden_files: # .dotfile=hidden
+            dir_files_in_dir += glob.glob(current_dir + "/.*")
         f_url            = ""
 
         if dir_files_in_dir:
-            for f in dir_files_in_dir:
-                f_url = as_url(f)
-                if is_dir(f_url):
-                    dir_folders      += 1
-                else:
-                    dir_files        += 1
-                    try:
-                        dir_filesize += query(f_url, 'size_bytes')
-                    except Exception as e:
-                        continue
+            if cfg_show_hidden_files:
+                for f in dir_files_in_dir:
+                    f_url = as_url(f)
+                    if is_dir(f_url):
+                        dir_folders      += 1
+                    else:
+                        dir_files        += 1
+                        try:
+                            dir_filesize += query(f_url, 'size_bytes')
+                        except Exception as e:
+                            continue
+            else:
+                for f in dir_files_in_dir:
+                    f_url = as_url(f)
+                    if not is_hidden(f):
+                        if is_dir(f_url):
+                            dir_folders      += 1
+                        else:
+                            dir_files        += 1
+                            try:
+                                dir_filesize += query(f_url, 'size_bytes')
+                            except Exception as e:
+                                continue
 
         bc = ByteConverter(dir_filesize)
         dir_foldK = str("{0:,}".format(dir_folders)) # to ','→' ' add .replace(',', ' ')
