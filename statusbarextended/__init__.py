@@ -87,8 +87,8 @@ class StatusBarExtended(DirectoryPaneListener):
                     dir_filesize    += query(f, 'size_bytes')
 
             bc = ByteConverter(dir_filesize)
-            dir_foldK  = str("{0:,}".format(dir_folders))
-            dir_fileK  = str("{0:,}".format(dir_files))
+            dir_foldK  = "{0:,}".format(dir_folders)
+            dir_fileK  = "{0:,}".format(dir_files)
             statusbar  = "Selected* "
             if     dir_folders > 0:
                 statusbar      += "Dirs: "   +      dir_foldK.rjust(Just.Fd, ' ') + "  "
