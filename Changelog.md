@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file
 
 ## [Unreleased]
-  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.0...HEAD
+  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.1...HEAD
+
+## [v0.3.1 — 07.08.2021]
+  [ v0.3.1 — 07.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.3.1
   - __Fixed__
     + :beetle: Hidden non-dotfiles always counted; (Windows) dotfiles (even without the 'hidden' attribute) not counted if option is set to hide
     + :beetle: Status bar is NOT updated when a _visible_ hidden file/folder is _selected_ and then _hidden_ via `Toggle hidden files`
