@@ -26,7 +26,7 @@ Aligns indicator positions to avoid "jitter" on selection/navigation
 
 |       Status Bar alignment       |
 | :------------------------------: |
-| ![Screenshot of alignment](fman-plugin-StatusBarExtendedF.png) |
+| ![Screenshot of alignment](fman-plugin-statusbarextended-alignment-v0.3.0.png) |
 
 __Known issues__
 
