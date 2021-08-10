@@ -23,7 +23,7 @@ class SingletonConfig(object):
     def setDefault(cls): # set the defaults in a dictionary
         cls.Default                 = dict()
         cls.Default['Enabled']      = True    # enable plugin
-        cls.Default['SizeDivisor']  = 1024    # binary file sizes
+        cls.Default['SizeDivisor']  = 1024.0    # binary file sizes
         cls.Default['HideDotfile']  = False   # hide non-hidden dotfiles on Windows
         cls.Default['Justify']      = {       # right-justification parameter
                     'folder'        : 5 ,
@@ -157,3 +157,35 @@ class SingletonConfig(object):
     @classmethod
     def saveConfig(cls, save_data):
         save_json('StatusBarExtended.json', save_data)
+
+class ConfigureStatusBarExtended(ApplicationCommand):
+    aliases = ('StatusBarExtended: configure',)
+
+    def __call__(self):
+        cfg = SingletonConfig()
+        self.cfgCurrent, exit_status = cfg.loadConfig()
+        if self.cfgCurrent is None:
+            return
+        self.setSizeDivisor(  cfg.Default['SizeDivisor'])
+        cfg.saveConfig(self.cfgCurrent)
+
+    def setSizeDivisor(self, value_default):
+        _accept         = ('1000', '1024')
+        value_cfg       = str(int(self.cfgCurrent['SizeDivisor']))
+        prompt_msg      = "Please enter the file size divisor ('1000' or '1024') to display file size\nin a decimal (1k=1000=10³) or binary (1k=1024=2¹⁰) format" + '\n'\
+            + "or leave the field empty to restore the default ("+str(value_default) +'):'
+        selection_start = 2
+        value_new       = ''
+        while value_new not in _accept:
+            value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start)
+            value_cfg = value_new # preserve user input on multiple edits
+            if not ok:
+                show_status_message("StatusBarExtended: setup canceled")
+                return
+            if   value_new.strip(' ') == '':
+                self.cfgCurrent['SizeDivisor'] = value_default
+                return
+            elif value_new not in _accept:
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "but the only acceptable values are:\n1000\n1024")
+        self.cfgCurrent['SizeDivisor'] = float(value_new)

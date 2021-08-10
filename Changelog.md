@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file
 
 ## [Unreleased]
   [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.1...HEAD
+  - __Added__
+    + :sparkles: User-configurable options via the `configure_status_bar_extended` command aliased as `StatusBarExtended: configure` in the Command Palette
+
+        |     Option    	|  Default   	|                  Description                                    	|
+        | :-------------	| :--------: 	| :-----------------------------------------                      	|
+        | SizeDivisor   	| `1024`     	|  File size format: decimal (1k=1000=10³) or binary (1k=1024=2¹⁰)	|
+
   - __Fixed__
     + :beetle: selection updating on each cursor move even when without a `toggle_selection` argument
     + :beetle: update function called 3 times per path change (one extra for each `from statusbarextended import StatusBarExtended`)
