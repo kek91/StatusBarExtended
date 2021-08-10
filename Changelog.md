@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file
 ## [Unreleased]
   [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.1...HEAD
   - __Fixed__
+    + :beetle: selection updating on each cursor move even when without a `toggle_selection` argument
     + :beetle: update function called 3 times per path change (one extra for each `from statusbarextended import StatusBarExtended`)
 
 ## [v0.3.1 — 07.08.2021]

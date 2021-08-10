@@ -81,7 +81,9 @@ class SelectionOverride(DirectoryPaneListener):
             'move_cursor_page_down', 'move_cursor_page_up',
             'move_cursor_home'     , 'move_cursor_end'):
             getattr(_CorePaneCommand, command_name)(self, args)
-            self.show_selected_files()
+            if 'toggle_selection' in args:
+                if args['toggle_selection'] == True:
+                    self.show_selected_files()
             return 'command_empty', {}
 
     def show_selected_files(self):
