@@ -30,6 +30,6 @@ Aligns indicator positions to avoid "jitter" on selection/navigation
 
 __Known issues__
 
-- fman raises `ValueError` on the first `Toggle hidden files` if a pane is _launched_ with hidden files _hidden_ (and status bar is not updated this one time)
+- fman raises `ValueError` on the first `Toggle hidden files` if a pane is _launched_ with hidden files _hidden_ (and status bar is not updated this one time) (__tip__: you might be able to conveniently close the error warning window with the same keybind you toggled hidden files with)
 - Status bar is NOT updated when _switching panes_ with a _mouse_ since plugins can't notice a pane switch due to a lack of the [necessary APIs](https://github.com/fman-users/fman/issues/292#issuecomment-360036718)
-- Alignment of indicators only works for _monospaced_ (fixed-width) fonts since it's currently implemented using regular spaces (tip: you can change this font in your `Theme.css` file `.statusbar{font-family:"yourMonospacedFont"}`). Dir/file count alignment is limited to up to 9,999
+- Alignment of indicators only works for _monospaced_ (fixed-width) fonts since it's currently implemented using regular spaces (__tip__: you can change this font in your `Theme.css` file `.statusbar{font-family:"yourMonospacedFont"}`). Dir/file count alignment is limited to up to 9,999
