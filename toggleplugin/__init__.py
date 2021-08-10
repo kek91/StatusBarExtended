@@ -3,7 +3,7 @@
 from fman import DirectoryPaneCommand, \
  show_status_message, load_json, save_json
 import json
-from statusbarextended import StatusBarExtended
+import statusbarextended        as SBE
 
 class ToggleStatusBarExtended(DirectoryPaneCommand):
     def __call__(self):
@@ -18,4 +18,4 @@ class ToggleStatusBarExtended(DirectoryPaneCommand):
                 StatusBarExtended.refresh(self)
         else:
             save_json('StatusBarExtended.json', '{"enabled": true}')
-            StatusBarExtended.refresh(self)
+            SBE.StatusBarExtended.refresh(self)

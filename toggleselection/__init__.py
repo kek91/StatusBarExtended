@@ -5,7 +5,7 @@ from fman import DirectoryPaneCommand, DirectoryPaneListener, load_json, save_js
 from core.commands.util import is_hidden
 from fman.url import splitscheme
 import json
-from statusbarextended import StatusBarExtended
+import statusbarextended        as SBE
 
 class _CorePaneCommand(DirectoryPaneCommand): # copy from core/commands/__init__.py
     def select_all(self):
@@ -89,4 +89,4 @@ class SelectionOverride(DirectoryPaneListener):
         if statusBarExtendedEnabled:
             statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
             if statusBarExtendedEnabledJson['enabled'] == True:
-                StatusBarExtended.show_selected_files(self)
+                SBE.StatusBarExtended.show_selected_files(self)

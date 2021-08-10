@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file
 
 ## [Unreleased]
   [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.1...HEAD
+  - __Fixed__
+    + :beetle: update function called 3 times per path change (one extra for each `from statusbarextended import StatusBarExtended`)
 
 ## [v0.3.1 — 07.08.2021]
   [ v0.3.1 — 07.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.3.1
