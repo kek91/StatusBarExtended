@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file
   - __Fixed__
     + :beetle: selection updating on each cursor move even when without a `toggle_selection` argument
     + :beetle: update function called 3 times per path change (one extra for each `from statusbarextended import StatusBarExtended`)
+    + :beetle: each pane calling the status bar update instead of only the left one (currently also the active one)
 
 ## [v0.3.1 — 07.08.2021]
   [ v0.3.1 — 07.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.3.1

@@ -16,6 +16,9 @@ class Just: # Justify elements in the status bar
     Sz = 7  # Justify Size   format: 7 symbols — up to 999.0 b
 
 class StatusBarExtended(DirectoryPaneListener):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_first_path_change = True
 
     def refresh(self):
 
@@ -137,6 +140,13 @@ class StatusBarExtended(DirectoryPaneListener):
 
 
     def on_path_changed(self):
+        if self.pane.get_path()=='null://': # ignore strange paths on launch
+            return
+        panes = self.pane.window.get_panes()
+        if self.is_first_path_change: # ignore the right pane on start
+            self.is_first_path_change = False
+            if panes.index(self.pane) == 1:
+                return
         statusBarExtendedEnabled = load_json('StatusBarExtended.json')
         if statusBarExtendedEnabled:
             statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
