@@ -5,10 +5,10 @@ from fman import DirectoryPaneCommand, DirectoryPaneListener, \
 from fman.url import as_url, as_human_readable
 from fman.fs import is_dir, query
 from core.commands.util import is_hidden # works on file_paths, not urls
-import json
 import glob
 from byteconverter import ByteConverter
 #from PyQt5.QtWidgets import QApplication
+import statusbarextended_config as SBEcfg
 
 class Just: # Justify elements in the status bar
     Fd = 5  # Justify Folder format: 5 symbols — up to 9,999
@@ -147,8 +147,10 @@ class StatusBarExtended(DirectoryPaneListener):
             self.is_first_path_change = False
             if panes.index(self.pane) == 1:
                 return
-        statusBarExtendedEnabled = load_json('StatusBarExtended.json')
-        if statusBarExtendedEnabled:
-            statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
-            if statusBarExtendedEnabledJson['enabled'] == True:
-                StatusBarExtended.refresh(self)
+        cfg = SBEcfg.SingletonConfig()
+        cfgCurrent, exit_status = cfg.loadConfig()
+
+        if  cfgCurrent is None:
+            return
+        if  cfgCurrent["Enabled"] == True:
+           StatusBarExtended.refresh(self)

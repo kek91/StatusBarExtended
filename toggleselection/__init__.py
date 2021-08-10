@@ -4,8 +4,8 @@
 from fman import DirectoryPaneCommand, DirectoryPaneListener, load_json, save_json, PLATFORM
 from core.commands.util import is_hidden
 from fman.url import splitscheme
-import json
 import statusbarextended        as SBE
+import statusbarextended_config as SBEcfg
 
 class _CorePaneCommand(DirectoryPaneCommand): # copy from core/commands/__init__.py
     def select_all(self):
@@ -87,8 +87,9 @@ class SelectionOverride(DirectoryPaneListener):
             return 'command_empty', {}
 
     def show_selected_files(self):
-        statusBarExtendedEnabled = load_json('StatusBarExtended.json')
-        if statusBarExtendedEnabled:
-            statusBarExtendedEnabledJson = json.loads(statusBarExtendedEnabled)
-            if statusBarExtendedEnabledJson['enabled'] == True:
-                SBE.StatusBarExtended.show_selected_files(self)
+        cfg = SBEcfg.SingletonConfig()
+        cfgCurrent, exit_status = cfg.loadConfig()
+        if  cfgCurrent is None:
+            return
+        if  cfgCurrent["Enabled"] == True:
+            SBE.StatusBarExtended.show_selected_files(self)
