@@ -172,6 +172,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
         self.setSymbolPane(   cfg.Default['SymbolPane'])
         self.setSymbolHiddenF(cfg.Default['SymbolHiddenF'])
         self.setHideDotfile(  cfg.Default['HideDotfile'])
+        self.setJustify(      cfg.Default['Justify'])
         cfg.saveConfig(self.cfgCurrent)
         run_application_command('view_configuration_status_bar_extended')
 
@@ -308,6 +309,66 @@ class ConfigureStatusBarExtended(ApplicationCommand):
                     + "I parsed it as " + value_new_fmt +'\n'\
                     + "but the only acceptable values are:\n" +_tsep+ "\n" +_fsep)
         self.cfgCurrent['HideDotfile'] = True if value_new_fmt in _t else False
+
+    def setJustify(self, value_default):
+        value_cfg_in    = self.cfgCurrent['Justify']
+        value_cfg       = " ".join(str(val) for val in  value_cfg_in.values())
+        val_def_fmt     = " ".join(str(val) for val in value_default.values())
+        max_val         = 11
+        prompt_msg      = "Please enter three natural numbers, each <= "+str(max_val)+", separated by space, to set the minimum width of" +'\n'\
+            + "the folder, file, and size indicators respectively." +'\n'\
+            + "e.g. with a min width=2, 1 in 1 and 21 will align, but not in 321:" +'\n'\
+            + " 1" +'\n'\
+            + "21" +'\n'\
+            + "321" +'\n'\
+            + "or enter '0' to restore an individual default" +'\n'\
+            + "or leave the field empty to restore all the defaults ("+val_def_fmt+"):"
+        selection_start = 0
+        selection_end   = 1
+        value_new       = ''
+        value_new_list  = []
+        _len            = len(value_new_list)
+        len_def         = len(value_default)
+        above_max       = False
+        while (not all([self.isNat0(v) for v in value_new_list])) \
+            or above_max \
+            or _len != len_def:
+            value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start, selection_end)
+            value_cfg = value_new # preserve user input on multiple edits
+            if not ok:
+                show_status_message("StatusBarExtended: setup canceled")
+                return
+            if value_new.strip(' ') == '':
+                self.cfgCurrent['Justify'] = value_default
+                return
+            value_new_nosp = ' '.join(value_new.split()) # replace multiple spaces with 1
+            value_new_list = value_new_nosp.split(' ')   # split by space
+            _len = len(value_new_list)
+            if   not all([self.isInt(v) for v in value_new_list]):
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
+                    + "but I couldn't parse all elements as integers")
+            elif not all([self.isNat0(v) for v in value_new_list]):
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
+                    + "but couldn't parse all elements as non-negative integers 0,1,2,3–∞")
+            elif True in [int(v) > max_val for v in value_new_list]:
+                above_max = True
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
+                    + "but the maximum value of each number is " + str(max_val))
+                continue
+            elif all([int(v) <= max_val for v in value_new_list]):
+                above_max = False
+            if _len != len_def:
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
+                    + "but was expecting " + str(len_def) + " elements")
+        for i, key in enumerate(value_default):
+            if value_new_list[i] == '0':
+                self.cfgCurrent['Justify'][key] = value_default[key]
+            else:
+                self.cfgCurrent['Justify'][key] = int(value_new_list[i])
 
     def isInt(self, s: str) -> bool:
         try:

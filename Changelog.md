@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file
         | SymbolPane    	| `◧` `◨`    	|  `Left`/`Right` pane symbol                                     	|
         | SymbolHiddenF 	| `◻` `◼`    	|  Hidden files `Shown`/`Hidden` symbol                           	|
         | HideDotfile   	| `False`    	|  Treat .dotfiles as hidden files on Windows                     	|
+        | Justify       	| `5` `5` `7`	|  Minimum width of the `Folder`/`File`/`Size` values             	|
 
     + :sparkles: A command to view current configuration (`view_configuration_status_bar_extended` aliased as `StatusBarExtended: view current configuration settings` in Command Palette)
 
