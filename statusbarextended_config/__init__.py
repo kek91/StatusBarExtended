@@ -326,3 +326,27 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             return int(s) > 0
         except ValueError:
             return False
+
+
+class ViewConfigurationStatusBarExtended(ApplicationCommand):
+    aliases = ('StatusBarExtended: view current configuration settings',)
+
+    def __call__(self):
+        cfg = SingletonConfig()
+        cfgCurrent, exit_status = cfg.loadConfig()
+        if cfgCurrent is None:
+            return
+        cfg_fmt = "StatusBarExtended's configuration:" +'\n\n'\
+            + "Option" + '\t      ' + 'Current' + '\t' + 'Default' +'\n'
+        for key in cfg.Default: # Default is odict, preserving the key order
+            if   key in ('SizeDivisor'):
+                cfg_fmt += key +'\t  =  '+ str(int(cfgCurrent[key])) + "\t"+str(int(cfg.Default[key])) +'\n'
+            elif key in ('SymbolPane'):
+                cfg_fmt += key +'\t  =  '+ " ".join(cfgCurrent[key]) + "\t"+" ".join(cfg.Default[key]) +'\n'
+            elif key in ('SymbolHiddenF'):
+                cfg_fmt += key +    '='  + " ".join(cfgCurrent[key]) + "\t"+" ".join(cfg.Default[key]) +'\n'
+            elif key in ('Justify'):
+                cfg_fmt += key +'\t  =  '+ " ".join(str(v) for v in cfgCurrent['Justify'].values()) + "\t"+" ".join(str(v) for v in cfg.Default['Justify'].values()) +'\n'
+            else:
+                cfg_fmt += key +'\t  =  '+ str(cfgCurrent[key]) + "\t"+str(cfg.Default[key]) +'\n'
+        show_alert(cfg_fmt)
