@@ -26,12 +26,12 @@ class SingletonConfig(object):
         cls.Default['SizeDivisor']  = 1024.0    # binary file sizes
         cls.Default['MaxGlob']      = 5000      # skip large folders with as many items; 0=∞
         cls.Default['SymbolPane']   = ['◧','◨'] # Left/Right
+        cls.Default['SymbolHiddenF']= ['◻','◼'] # Show/Hide hidden files
         cls.Default['HideDotfile']  = False   # hide non-hidden dotfiles on Windows
         cls.Default['Justify']      = {       # right-justification parameter
                     'folder'        : 5 ,
                     'file'          : 5 ,
                     'size'          : 7 }
-        cls.Default['SymbolHiddenF']= '◻◼'    # Show/Hide hidden files
         cls.msgTimeout = 5 # timeout in seconds for show_status_message
 
     @classmethod
@@ -169,6 +169,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
         self.setSizeDivisor(  cfg.Default['SizeDivisor'])
         self.setMaxGlob(      cfg.Default['MaxGlob'])
         self.setSymbolPane(   cfg.Default['SymbolPane'])
+        self.setSymbolHiddenF(cfg.Default['SymbolHiddenF'])
         cfg.saveConfig(self.cfgCurrent)
 
     def setSizeDivisor(self, value_default):
@@ -247,6 +248,34 @@ class ConfigureStatusBarExtended(ApplicationCommand):
                     + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
                     + "but was expecting " + str(len_def) + " elements")
         self.cfgCurrent['SymbolPane'] = value_new_list
+
+    def setSymbolHiddenF(self, value_default):
+        value_cfg       = " ".join(self.cfgCurrent['SymbolHiddenF'])
+        prompt_msg      = "Please enter two symbols, separated by space, to indicate whether hidden files are Shown/Hidden" +'\n'\
+            + "or leave the field empty to restore the default ("+str(value_default)+"):"
+        selection_start = 0
+        selection_end   = 0
+        value_new       = ''
+        value_new_list  = []
+        _len            = len(value_new_list)
+        len_def         = len(value_default)
+        while _len != len_def:
+            value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start, selection_end)
+            value_cfg = value_new # preserve user input on multiple edits
+            if not ok:
+                show_status_message("StatusBarExtended: setup canceled")
+                return
+            if value_new.strip(' ') == '':
+                self.cfgCurrent['SymbolHiddenF'] = value_default
+                return
+            value_new_nosp = ' '.join(value_new.split()) # replace multiple spaces with 1
+            value_new_list = value_new_nosp.split(' ')   # split by space
+            _len = len(value_new_list)
+            if _len != 2:
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
+                    + "but was expecting " + str(len_def) + " elements")
+        self.cfgCurrent['SymbolHiddenF'] = value_new_list
 
     def isInt(self, s: str) -> bool:
         try:
