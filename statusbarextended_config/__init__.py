@@ -2,7 +2,7 @@
 
 from fman import ApplicationCommand, \
  show_prompt, show_alert, show_status_message, load_json, save_json, \
- PLATFORM, DATA_DIRECTORY
+ PLATFORM, DATA_DIRECTORY, run_application_command
 from fman.fs import exists, delete, move_to_trash
 from fman.url import as_human_readable as as_path, as_url, join, splitscheme, basename, dirname
 from collections import OrderedDict as odict
@@ -173,6 +173,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
         self.setSymbolHiddenF(cfg.Default['SymbolHiddenF'])
         self.setHideDotfile(  cfg.Default['HideDotfile'])
         cfg.saveConfig(self.cfgCurrent)
+        run_application_command('view_configuration_status_bar_extended')
 
     def setSizeDivisor(self, value_default):
         _accept         = ('1000', '1024')
