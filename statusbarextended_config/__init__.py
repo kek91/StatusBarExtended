@@ -5,6 +5,7 @@ from fman import ApplicationCommand, \
  PLATFORM, DATA_DIRECTORY
 from fman.fs import exists, delete, move_to_trash
 from fman.url import as_human_readable as as_path, as_url, join, splitscheme, basename, dirname
+from collections import OrderedDict as odict
 
 class SingletonConfig(object):
     def __new__(cls):
@@ -21,17 +22,17 @@ class SingletonConfig(object):
 
     @classmethod
     def setDefault(cls): # set the defaults in a dictionary
-        cls.Default                 = dict()
+        cls.Default                 = odict()
         cls.Default['Enabled']      = True    # enable plugin
         cls.Default['SizeDivisor']  = 1024.0    # binary file sizes
         cls.Default['MaxGlob']      = 5000      # skip large folders with as many items; 0=∞
         cls.Default['SymbolPane']   = ['◧','◨'] # Left/Right
         cls.Default['SymbolHiddenF']= ['◻','◼'] # Show/Hide hidden files
         cls.Default['HideDotfile']  = False     # hide non-hidden dotfiles on Windows
-        cls.Default['Justify']      = {       # right-justification parameter
+        cls.Default['Justify']      = odict({   # right-justification parameter
                     'folder'        : 5 ,
                     'file'          : 5 ,
-                    'size'          : 7 }
+                    'size'          : 7 })
         cls.msgTimeout = 5 # timeout in seconds for show_status_message
 
     @classmethod
