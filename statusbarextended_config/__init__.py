@@ -24,12 +24,12 @@ class SingletonConfig(object):
         cls.Default                 = dict()
         cls.Default['Enabled']      = True    # enable plugin
         cls.Default['SizeDivisor']  = 1024.0    # binary file sizes
+        cls.Default['MaxGlob']      = 5000      # skip large folders with as many items; 0=∞
         cls.Default['HideDotfile']  = False   # hide non-hidden dotfiles on Windows
         cls.Default['Justify']      = {       # right-justification parameter
                     'folder'        : 5 ,
                     'file'          : 5 ,
                     'size'          : 7 }
-        cls.Default['MaxGlob']      = 5000    # skip large folders with as many items
         cls.Default['SymbolPane']   = '◧◨'    # Left/Right
         cls.Default['SymbolHiddenF']= '◻◼'    # Show/Hide hidden files
         cls.msgTimeout = 5 # timeout in seconds for show_status_message
@@ -167,6 +167,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
         if self.cfgCurrent is None:
             return
         self.setSizeDivisor(  cfg.Default['SizeDivisor'])
+        self.setMaxGlob(      cfg.Default['MaxGlob'])
         cfg.saveConfig(self.cfgCurrent)
 
     def setSizeDivisor(self, value_default):
@@ -189,3 +190,50 @@ class ConfigureStatusBarExtended(ApplicationCommand):
                 show_alert("You entered\n" + value_new +'\n'\
                     + "but the only acceptable values are:\n1000\n1024")
         self.cfgCurrent['SizeDivisor'] = float(value_new)
+
+    def setMaxGlob(self, value_default):
+        value_cfg       = str(self.cfgCurrent['MaxGlob'])
+        prompt_msg      = "Please enter a natural number to set the threshold of the number of folders+files in a pane," +'\n'\
+            + "above which the status bar for such a pane will not be updated to improve performance" +'\n'\
+            + "or enter '0' to disable" +'\n'\
+            + "or leave the field empty to restore the default ("+str(value_default)+"):"
+        selection_start = 0
+        value_new       = ''
+        while not self.isNat0(value_new):
+            value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start)
+            value_cfg = value_new # preserve user input on multiple edits
+            if not ok:
+                show_status_message("StatusBarExtended: setup canceled")
+                return
+            if value_new.strip(' ') == '':
+                self.cfgCurrent['MaxGlob'] = value_default
+                return
+            if value_new.strip(' ') == '0':
+                self.cfgCurrent['MaxGlob'] = 0
+                return
+            if   not isInt(value_new):
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "but I couldn't parse it as an integer")
+            elif not isNat0(value_new):
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "but I was expecting a non-negative integer 0,1,2,3–∞")
+        self.cfgCurrent['MaxGlob'] = int(value_new)
+
+    def isInt(self, s: str) -> bool:
+        try:
+            int(s)
+            return True
+        except ValueError:
+            return False
+    def isNat0(self, s: str) -> bool:
+        try:
+            int(s)
+            return int(s) >= 0
+        except ValueError:
+            return False
+    def isNat1(self, s: str) -> bool:
+        try:
+            int(s)
+            return int(s) > 0
+        except ValueError:
+            return False

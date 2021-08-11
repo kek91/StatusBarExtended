@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file
         |     Option    	|  Default   	|                  Description                                    	|
         | :-------------	| :--------: 	| :-----------------------------------------                      	|
         | SizeDivisor   	| `1024`     	|  File size format: decimal (1k=1000=10³) or binary (1k=1024=2¹⁰)	|
+        | MaxGlob       	| `5000`     	|  Skip folders with as many items                                	|
 
   - __Fixed__
     + :beetle: selection updating on each cursor move even when without a `toggle_selection` argument
