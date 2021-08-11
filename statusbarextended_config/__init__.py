@@ -27,7 +27,7 @@ class SingletonConfig(object):
         cls.Default['MaxGlob']      = 5000      # skip large folders with as many items; 0=∞
         cls.Default['SymbolPane']   = ['◧','◨'] # Left/Right
         cls.Default['SymbolHiddenF']= ['◻','◼'] # Show/Hide hidden files
-        cls.Default['HideDotfile']  = False   # hide non-hidden dotfiles on Windows
+        cls.Default['HideDotfile']  = False     # hide non-hidden dotfiles on Windows
         cls.Default['Justify']      = {       # right-justification parameter
                     'folder'        : 5 ,
                     'file'          : 5 ,
@@ -170,6 +170,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
         self.setMaxGlob(      cfg.Default['MaxGlob'])
         self.setSymbolPane(   cfg.Default['SymbolPane'])
         self.setSymbolHiddenF(cfg.Default['SymbolHiddenF'])
+        self.setHideDotfile(  cfg.Default['HideDotfile'])
         cfg.saveConfig(self.cfgCurrent)
 
     def setSizeDivisor(self, value_default):
@@ -276,6 +277,35 @@ class ConfigureStatusBarExtended(ApplicationCommand):
                     + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
                     + "but was expecting " + str(len_def) + " elements")
         self.cfgCurrent['SymbolHiddenF'] = value_new_list
+
+    def setHideDotfile(self, value_default):
+        _t      = ('1', 't', 'true')
+        _f      = ('0', 'f', 'false')
+        _tsep   = "'" + "' or '".join(_t) + "'"
+        _fsep   = "'" + "' or '".join(_f) + "'"
+        _accept = (_t + _f)
+        value_cfg       = str(self.cfgCurrent['HideDotfile'])
+        prompt_msg      = "Please enter " +_tsep+ " to treat all .dotfiles on Windows as hidden files\n    even if they don't have a 'hidden' attribute" +'\n'\
+            + "or " +_fsep+ " to treat them as regular files" +'\n'\
+            + "or leave the field empty to restore the default ("+str(value_default) +'):'
+        selection_start = 0
+        value_new       = ''
+        value_new_fmt   = value_new.casefold()
+        while value_new_fmt not in _accept:
+            value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start)
+            value_cfg = value_new # preserve user input on multiple edits
+            if not ok:
+                show_status_message("StatusBarExtended: setup canceled")
+                return
+            if value_new.strip(' ') == '':
+                self.cfgCurrent['HideDotfile'] = value_default
+                return
+            value_new_fmt = value_new.casefold()
+            if value_new_fmt not in _accept:
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + value_new_fmt +'\n'\
+                    + "but the only acceptable values are:\n" +_tsep+ "\n" +_fsep)
+        self.cfgCurrent['HideDotfile'] = True if value_new_fmt in _t else False
 
     def isInt(self, s: str) -> bool:
         try:

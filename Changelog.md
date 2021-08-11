@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file
         | MaxGlob       	| `5000`     	|  Skip folders with as many items                                	|
         | SymbolPane    	| `◧` `◨`    	|  `Left`/`Right` pane symbol                                     	|
         | SymbolHiddenF 	| `◻` `◼`    	|  Hidden files `Shown`/`Hidden` symbol                           	|
+        | HideDotfile   	| `False`    	|  Treat .dotfiles as hidden files on Windows                     	|
 
   - __Fixed__
     + :beetle: selection updating on each cursor move even when without a `toggle_selection` argument
