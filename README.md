@@ -25,7 +25,7 @@ Allows a user to configure all the options via the `configure_status_bar_extende
   | :-------------	| :--------: 	| :-----------------------------------------                                  	|
   | Enabled       	| `True`     	|  Enable or disable this plugin                                              	|
   | SizeDivisor   	| `1024`     	|  File size format: decimal (1k=1000=10³) or binary (1k=1024=2¹⁰)            	|
-  | MaxGlob       	| `5000`     	|  Skip folders with as many items                                            	|
+  | MaxGlob       	| `5000`     	|  Skip folders with as many items (folders+files)                            	|
   | SymbolPane    	| `◧` `◨`    	|  `Left`/`Right` pane symbol                                                 	|
   | SymbolHiddenF 	| `◻` `◼`    	|  Hidden files `Shown`/`Hidden` symbol (__tip__: try `👁` `👀👓` `✓✗` `◎◉` `🐵🙈`)	|
   | HideDotfile   	| `False`    	|  Treat .dotfiles as hidden files on Windows                                 	|
