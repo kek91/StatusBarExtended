@@ -71,9 +71,9 @@ class StatusBarExtended(DirectoryPaneListener):
         dir_foldK = str("{0:,}".format(dir_folders)) # to ','→' ' add .replace(',', ' ')
         dir_fileK = str("{0:,}".format(dir_files))
         if(self.pane == panes[0]):
-            statusbar_pane      += "◧"
+            statusbar_pane      += cfg['SymbolPane'][0]
         else:
-            statusbar_pane      += "◨"
+            statusbar_pane      += cfg['SymbolPane'][1]
         statusbar_pane          += "   "     + pane_show_hidden_files             + "     "
         if     dir_folders > 0:
             statusbar_pane      += "Dirs: "  +      dir_foldK.rjust(Just.Fd, ' ') + "  "
