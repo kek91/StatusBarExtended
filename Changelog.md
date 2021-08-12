@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file
 ## [Unreleased]
   [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.1...HEAD
   - __Added__
-    + :sparkles: User-configurable options via the `configure_status_bar_extended` command aliased as `StatusBarExtended: configure` in the Command Palette
+    + :sparkles: User-configurable options via the `configure_status_bar_extended` command aliased as `StatusBarExtended: configure` in the Command Palette and bound to <kbd>Shift</kbd><kbd>F3</kbd> by default
 
         |     Option    	|  Default   	|                  Description                                    	|
         | :-------------	| :--------: 	| :-----------------------------------------                      	|

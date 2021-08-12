@@ -2,7 +2,9 @@
 
 Extends the status bar in fman to show additional information.
 
-Turn the plugin on or off by using the keyboard shortcut, default is **F3**.
+Turn the plugin on or off by using a keyboard shortcut, default is <kbd>F3</kbd>.
+
+Configure the plugin by using a keyboard shortcut, default is <kbd>Shift</kbd><kbd>F3</kbd>.
 
 
 
