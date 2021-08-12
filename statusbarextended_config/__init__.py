@@ -205,7 +205,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             + "or leave the field empty to restore the default ("+str(value_default)+"):"
         selection_start = 0
         value_new       = ''
-        while not self.isNat0(value_new):
+        while not isNat0(value_new):
             value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start)
             value_cfg = value_new # preserve user input on multiple edits
             if not ok:
@@ -330,7 +330,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
         _len            = len(value_new_list)
         len_def         = len(value_default)
         above_max       = False
-        while (not all([self.isNat0(v) for v in value_new_list])) \
+        while (not all([isNat0(v) for v in value_new_list])) \
             or above_max \
             or _len != len_def:
             value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start, selection_end)
@@ -344,11 +344,11 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             value_new_nosp = ' '.join(value_new.split()) # replace multiple spaces with 1
             value_new_list = value_new_nosp.split(' ')   # split by space
             _len = len(value_new_list)
-            if   not all([self.isInt(v) for v in value_new_list]):
+            if   not all([isInt(v) for v in value_new_list]):
                 show_alert("You entered\n" + value_new +'\n'\
                     + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
                     + "but I couldn't parse all elements as integers")
-            elif not all([self.isNat0(v) for v in value_new_list]):
+            elif not all([isNat0(v) for v in value_new_list]):
                 show_alert("You entered\n" + value_new +'\n'\
                     + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
                     + "but couldn't parse all elements as non-negative integers 0,1,2,3–∞")
@@ -370,24 +370,6 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             else:
                 self.cfgCurrent['Justify'][key] = int(value_new_list[i])
 
-    def isInt(self, s: str) -> bool:
-        try:
-            int(s)
-            return True
-        except ValueError:
-            return False
-    def isNat0(self, s: str) -> bool:
-        try:
-            int(s)
-            return int(s) >= 0
-        except ValueError:
-            return False
-    def isNat1(self, s: str) -> bool:
-        try:
-            int(s)
-            return int(s) > 0
-        except ValueError:
-            return False
 
 
 class ViewConfigurationStatusBarExtended(ApplicationCommand):
@@ -412,3 +394,22 @@ class ViewConfigurationStatusBarExtended(ApplicationCommand):
             else:
                 cfg_fmt += key +'\t  =  '+ str(cfgCurrent[key]) + "\t"+str(cfg.Default[key]) +'\n'
         show_alert(cfg_fmt)
+
+def isInt(s: str) -> bool:
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+def isNat0(s: str) -> bool:
+    try:
+        int(s)
+        return int(s) >= 0
+    except ValueError:
+        return False
+def isNat1(s: str) -> bool:
+    try:
+        int(s)
+        return int(s) > 0
+    except ValueError:
+        return False
