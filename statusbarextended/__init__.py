@@ -35,9 +35,10 @@ class StatusBarExtended(DirectoryPaneListener):
         dir_files        = 0
         dir_filesize     = 0
         dir_files_in_dir      = glob.glob(current_dir + "/*")
-        if PLATFORM == 'Windows':   # .dotfile=regular (use 'hidden' attr to hide)
+        if PLATFORM == 'Windows' and not cfg['HideDotfile']:
+            # .dotfiles=regular (always shown unless have a 'hidden' attr)
             dir_files_in_dir += glob.glob(current_dir + "/.*")
-        elif cfg_show_hidden_files: # .dotfile=hidden
+        elif cfg_show_hidden_files: # .dotfile=hidden (internal option shows)
             dir_files_in_dir += glob.glob(current_dir + "/.*")
         f_url            = ""
 
