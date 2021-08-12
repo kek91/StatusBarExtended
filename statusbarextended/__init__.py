@@ -68,7 +68,7 @@ class StatusBarExtended(DirectoryPaneListener):
         bc = ByteConverter(dir_filesize)
         dir_foldK = str("{0:,}".format(dir_folders)) # to ','→' ' add .replace(',', ' ')
         dir_fileK = str("{0:,}".format(dir_files))
-        if(self.pane == self.pane.window.get_panes()[0]):
+        if(self.pane == panes[0]):
             statusbar_pane      += "◧"
         else:
             statusbar_pane      += "◨"
