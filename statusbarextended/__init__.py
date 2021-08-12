@@ -1,7 +1,7 @@
 # Main class for StatusBarExtended
 
 from fman import DirectoryPaneCommand, DirectoryPaneListener, \
- show_status_message, load_json, save_json, PLATFORM
+ show_status_message, load_json, PLATFORM
 from fman.url import as_url, as_human_readable as as_path
 from fman.fs import is_dir, query
 from core.commands.util import is_hidden # works on file_paths, not urls
