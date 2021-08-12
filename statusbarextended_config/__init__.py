@@ -23,7 +23,7 @@ class SingletonConfig(object):
     @classmethod
     def setDefault(cls): # set the defaults in a dictionary
         cls.Default                 = odict()
-        cls.Default['Enabled']      = True    # enable plugin
+        cls.Default['Enabled']      = True      # enable plugin
         cls.Default['SizeDivisor']  = 1024.0    # binary file sizes
         cls.Default['MaxGlob']      = 5000      # skip large folders with as many items; 0=∞
         cls.Default['SymbolPane']   = ['◧','◨'] # Left/Right
