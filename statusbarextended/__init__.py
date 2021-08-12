@@ -2,7 +2,7 @@
 
 from fman import DirectoryPaneCommand, DirectoryPaneListener, \
  show_status_message, load_json, save_json, PLATFORM
-from fman.url import as_url, as_human_readable
+from fman.url import as_url, as_human_readable as as_path
 from fman.fs import is_dir, query
 from core.commands.util import is_hidden # works on file_paths, not urls
 import glob
@@ -29,7 +29,7 @@ class StatusBarExtended(DirectoryPaneListener):
         cfg_show_hidden_files  = load_json('Panes.json')[pane_id]['show_hidden_files']
         pane_show_hidden_files = "◻" if cfg_show_hidden_files else "◼" # alt: 👁🐵🙈◎◉✓✗
         cur_dir_url      = self.pane.get_path()
-        current_dir      = as_human_readable(cur_dir_url)
+        current_dir      = as_path(cur_dir_url)
         dir_folders      = 0
         dir_files        = 0
         dir_filesize     = 0
@@ -109,7 +109,7 @@ class StatusBarExtended(DirectoryPaneListener):
                         dir_filesize    += query(f, 'size_bytes')
             else:
                 for f in selected:
-                    if not is_hidden(as_human_readable(f)):
+                    if not is_hidden(as_path(f)):
                         if is_dir(f):
                             dir_folders     += 1
                         else:
