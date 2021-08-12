@@ -167,6 +167,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
         self.cfgCurrent, exit_status = cfg.loadConfig()
         if self.cfgCurrent is None:
             return
+        self.setEnabled(      cfg.Default['Enabled'])
         self.setSizeDivisor(  cfg.Default['SizeDivisor'])
         self.setMaxGlob(      cfg.Default['MaxGlob'])
         self.setSymbolPane(   cfg.Default['SymbolPane'])
@@ -175,6 +176,35 @@ class ConfigureStatusBarExtended(ApplicationCommand):
         self.setJustify(      cfg.Default['Justify'])
         cfg.saveConfig(self.cfgCurrent)
         run_application_command('view_configuration_status_bar_extended')
+
+    def setEnabled(self, value_default):
+        _t      = ('1', 't', 'true')
+        _f      = ('0', 'f', 'false')
+        _tsep   = "'" + "' or '".join(_t) + "'"
+        _fsep   = "'" + "' or '".join(_f) + "'"
+        _accept = (_t + _f)
+        value_cfg       = str(self.cfgCurrent['Enabled'])
+        prompt_msg      = "Please enter " +_tsep+ " to enable this plugin" +'\n'\
+            + "or " +_fsep+ " to disable it" +'\n'\
+            + "or leave the field empty to restore the default ("+str(value_default) +'):'
+        selection_start = 0
+        value_new       = ''
+        value_new_fmt   = value_new.casefold()
+        while value_new_fmt not in _accept:
+            value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start)
+            value_cfg = value_new # preserve user input on multiple edits
+            if not ok:
+                show_status_message("StatusBarExtended: setup canceled")
+                return
+            if value_new.strip(' ') == '':
+                self.cfgCurrent['Enabled'] = value_default
+                return
+            value_new_fmt = value_new.casefold()
+            if value_new_fmt not in _accept:
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + value_new_fmt +'\n'\
+                    + "but the only acceptable values are:\n" +_tsep+ "\n" +_fsep)
+        self.cfgCurrent['Enabled'] = True if value_new_fmt in _t else False
 
     def setSizeDivisor(self, value_default):
         _accept         = ('1000', '1024')
