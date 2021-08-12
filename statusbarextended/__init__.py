@@ -37,8 +37,13 @@ class StatusBarExtended(DirectoryPaneListener):
         elif cfg_show_hidden_files: # .dotfile=hidden (internal option shows)
             dir_files_in_dir += glob.glob(current_dir + "/.*")
         f_url            = ""
+        aboveMax         = False
 
-        if dir_files_in_dir:
+        if not dir_files_in_dir:
+            pass
+        elif len(dir_files_in_dir) > cfg['MaxGlob']:
+            aboveMax       = True
+        else:
             if cfg_show_hidden_files:
                 for f in dir_files_in_dir:
                     f_url = as_url(f)
@@ -65,6 +70,7 @@ class StatusBarExtended(DirectoryPaneListener):
 
         bc   = ByteConverter(dir_filesize)
         bcc  = str(bc.calc())
+        maxG = str("{0:,}".format(cfg['MaxGlob']))
         jFd  = cfg['Justify']['folder']
         jFl  = cfg['Justify']['file']
         jSz  = cfg['Justify']['size']
@@ -79,15 +85,20 @@ class StatusBarExtended(DirectoryPaneListener):
             statusbar_pane      += "Dirs: "  + dir_foldK.rjust(jFd, ' ') + "  "
             if dir_folders <= 9999:
                 statusbar_pane  += " "
+        elif aboveMax:
+            statusbar_pane      += "Dirs  "  +     '+  '.rjust(jFd, ' ') + "   "
         else:
             statusbar_pane      += "      "  +        ''.rjust(jFd, ' ') + "   "
         if     dir_files > 0:
             statusbar_pane      += "Files: " + dir_fileK.rjust(jFl, ' ') + "   "
             if dir_files <= 9999:
                 statusbar_pane  += " "
+        elif aboveMax:
+            statusbar_pane      += "Files >" +      maxG.rjust(jFl, ' ') + "    "
         else:
             statusbar_pane      += "       " +        ''.rjust(jFl, ' ') + "    "
-        statusbar_pane          += "  Size: "+       bcc.rjust(jSz, ' ') + "   "
+        if not aboveMax:
+            statusbar_pane      += "  Size: "+       bcc.rjust(jSz, ' ') + "   "
             #        to align with "∑ Size: "
 
         show_status_message(statusbar_pane, 5000)
