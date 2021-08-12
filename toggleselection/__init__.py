@@ -92,4 +92,4 @@ class SelectionOverride(DirectoryPaneListener):
         if  cfgCurrent is None:
             return
         if  cfgCurrent["Enabled"] == True:
-            SBE.StatusBarExtended.show_selected_files(self)
+            SBE.StatusBarExtended.show_selected_files(self, cfgCurrent)

@@ -17,4 +17,4 @@ class ToggleStatusBarExtended(DirectoryPaneCommand):
         else:
             cfgCurrent["Enabled"]  = True
             cfg.saveConfig(cfgCurrent)
-            SBE.StatusBarExtended.refresh(self)
+            SBE.StatusBarExtended.refresh(self, cfgCurrent)

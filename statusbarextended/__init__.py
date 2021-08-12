@@ -20,7 +20,7 @@ class StatusBarExtended(DirectoryPaneListener):
         super().__init__(*args, **kwargs)
         self.is_first_path_change = True
 
-    def refresh(self):
+    def refresh(self, cfg):
 
         panes            = self.pane.window.get_panes()
         pane_id          = panes.index(self.pane)
@@ -90,7 +90,7 @@ class StatusBarExtended(DirectoryPaneListener):
 
         show_status_message(statusbar_pane, 5000)
 
-    def show_selected_files(self):
+    def show_selected_files(self, cfg):
         panes           = self.pane.window.get_panes()
         pane_id         = panes.index(self.pane)
         cfg_show_hidden_files  = load_json('Panes.json')[pane_id]['show_hidden_files']
@@ -136,7 +136,7 @@ class StatusBarExtended(DirectoryPaneListener):
             show_status_message(statusbar)
 
         else:
-            StatusBarExtended.refresh(self)
+            StatusBarExtended.refresh(self, cfg)
 
 
     def on_path_changed(self):
@@ -153,4 +153,4 @@ class StatusBarExtended(DirectoryPaneListener):
         if  cfgCurrent is None:
             return
         if  cfgCurrent["Enabled"] == True:
-           StatusBarExtended.refresh(self)
+           StatusBarExtended.refresh(self, cfgCurrent)
