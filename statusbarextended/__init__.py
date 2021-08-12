@@ -74,18 +74,18 @@ class StatusBarExtended(DirectoryPaneListener):
             statusbar_pane      += "◨"
         statusbar_pane          += "   "     + pane_show_hidden_files             + "     "
         if     dir_folders > 0:
-            statusbar_pane      += "Dirs: "  +      dir_foldK.rjust(Just.Fd, ' ') + "  "
+            statusbar_pane      += "Dirs: "  +      dir_foldK.rjust(Just.Fd, ' ') + "  "
             if dir_folders <= 9999:
                 statusbar_pane  += " "
         else:
-            statusbar_pane      += "      "  +             ''.rjust(Just.Fd, ' ') + "   "
+            statusbar_pane      += "      "  +             ''.rjust(Just.Fd, ' ') + "   "
         if     dir_files > 0:
-            statusbar_pane      += "Files: " +      dir_fileK.rjust(Just.Fl, ' ') + "   "
+            statusbar_pane      += "Files: " +      dir_fileK.rjust(Just.Fl, ' ') + "   "
             if dir_files <= 9999:
                 statusbar_pane  += " "
         else:
-            statusbar_pane      += "       " +             ''.rjust(Just.Fl, ' ') + "    "
-        statusbar_pane          += "  Size: "+ str(bc.calc()).rjust(Just.Sz, ' ') + "   "
+            statusbar_pane      += "       " +             ''.rjust(Just.Fl, ' ') + "    "
+        statusbar_pane          += "  Size: "+ str(bc.calc()).rjust(Just.Sz, ' ') + "   "
         #            to align with "∑ Size: "
 
         show_status_message(statusbar_pane, 5000)
@@ -121,18 +121,18 @@ class StatusBarExtended(DirectoryPaneListener):
             dir_fileK  = "{0:,}".format(dir_files)
             statusbar  = "Selected* "
             if     dir_folders > 0:
-                statusbar      += "Dirs: "   +      dir_foldK.rjust(Just.Fd, ' ') + "  "
+                statusbar      += "Dirs: "   +      dir_foldK.rjust(Just.Fd, ' ') + "  "
                 if dir_folders <= 9999:
                     statusbar  += " "
             else:
-                statusbar      += "      "   +             ''.rjust(Just.Fd, ' ') + "   "
+                statusbar      += "      "   +             ''.rjust(Just.Fd, ' ') + "   "
             if     dir_files > 0:
-                statusbar      += "Files: "  +      dir_fileK.rjust(Just.Fl, ' ') + "   "
+                statusbar      += "Files: "  +      dir_fileK.rjust(Just.Fl, ' ') + "   "
                 if dir_files <= 9999:
                     statusbar  += " "
             else:
-                statusbar      += "       "  +             ''.rjust(Just.Fl, ' ') + "    "
-            statusbar          += "∑ Size: " + str(bc.calc()).rjust(Just.Sz, ' ') + "   "
+                statusbar      += "       "  +             ''.rjust(Just.Fl, ' ') + "    "
+            statusbar          += "∑ Size: " + str(bc.calc()).rjust(Just.Sz, ' ') + "   "
             show_status_message(statusbar)
 
         else:
