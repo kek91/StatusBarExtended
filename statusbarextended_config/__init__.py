@@ -178,13 +178,13 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             + "# \tOption \t\tDescription" +'\n'\
             + "&0. \t&a&l&l\t\t"       + "Configure all the options"                    +'\n'\
             + "&1. \t&Enabled\t\t"     + "Enable/Disable this plugin"                   +'\n'\
-            + "&2. \tSize&Divisor\t"   + "File size format: decimal or binary"          +'\n'\
+            + "&2. \t&SizeDivisor\t"   + "File size format: decimal or binary"          +'\n'\
             + "&3. \tMax&Glob\t\t"     + "Skip folders with as many items"              +'\n'\
             + "&4. \t&Label\t\t"       + "Labels for the Folder/File/Size values"       +'\n'\
             + "&5. \tHide0La&bel\t"    + "Hide labels when 0 folders/files"             +'\n'\
             + "&6. \tSymbol&Pane\t"    + "Left/Right pane symbol"                       +'\n'\
             + "&7. \tSymbol&HiddenF\t" + "Hidden files Shown/Hidden symbol"             +'\n'\
-            + "&8. \tHideD&otfile\t"   + "Treat .dotfiles as hidden files on Windows"   +'\n'\
+            + "&8. \tHide&Dotfile\t"   + "Treat .dotfiles as hidden files on Windows"   +'\n'\
             + "&9. \t&Justify\t\t"     + "Minimum width of the Folder/File/Size values" +'\n'\
             + '\n'
         value_new, ok = show_prompt(prompt_msg)
@@ -193,7 +193,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             return
         if any(x in value_new.casefold() for x in ('1','e','0','all')):
             self.setEnabled(      cfg.Default['Enabled'])
-        if any(x in value_new.casefold() for x in ('2','d','0','all')):
+        if any(x in value_new.casefold() for x in ('2','s','0','all')):
             self.setSizeDivisor(  cfg.Default['SizeDivisor'])
         if any(x in value_new.casefold() for x in ('3','g','0','all')):
             self.setMaxGlob(      cfg.Default['MaxGlob'])
@@ -205,7 +205,7 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             self.setSymbolPane(   cfg.Default['SymbolPane'])
         if any(x in value_new.casefold() for x in ('7','h','0','all')):
             self.setSymbolHiddenF(cfg.Default['SymbolHiddenF'])
-        if any(x in value_new.casefold() for x in ('8','o','0','all')):
+        if any(x in value_new.casefold() for x in ('8','d','0','all')):
             self.setHideDotfile(  cfg.Default['HideDotfile'])
         if any(x in value_new.casefold() for x in ('9','j','0','all')):
             self.setJustify(      cfg.Default['Justify'])
