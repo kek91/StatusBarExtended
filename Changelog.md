@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file
 
 ## [Unreleased]
-  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.0...HEAD
+  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.1...HEAD
+
+## [v0.4.1 — 13.08.2021]
+  [ v0.4.1 — 13.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.1
   - __Added__
     + :sparkles: User-configurable options for the Folder/File/Size labels 
 
