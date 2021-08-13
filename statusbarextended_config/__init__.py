@@ -525,7 +525,10 @@ class ViewConfigurationStatusBarExtended(ApplicationCommand):
                     cfg_fmt += '  ' + subkey +'\t  =  '+ cfgCurrent[ 'Label'][subkey] +'\t'
                     cfg_fmt +=                           cfg.Default['Label'][subkey] +'\n'
             elif key in ('Justify'):
-                cfg_fmt += key +'\t  =  '+ " ".join(str(v) for v in cfgCurrent['Justify'].values()) + "\t"+" ".join(str(v) for v in cfg.Default['Justify'].values()) +'\n'
+                cfg_fmt += key +'\n'
+                for subkey in cfg.Default['Justify']:
+                    cfg_fmt+='  '+subkey+'\t  =  '+str(cfgCurrent[ 'Justify'][subkey]) +'\t'
+                    cfg_fmt+=                      str(cfg.Default['Justify'][subkey]) +'\n'
             else:
                 cfg_fmt += key +'\t  =  '+ str(cfgCurrent[key]) + "\t"+str(cfg.Default[key]) +'\n'
         show_alert(cfg_fmt)
