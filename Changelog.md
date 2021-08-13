@@ -2,7 +2,29 @@
 All notable changes to this project will be documented in this file
 
 ## [Unreleased]
-  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.3.1...HEAD
+  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.0...HEAD
+
+## [v0.4.0 — 13.08.2021]
+  [ v0.4.0 — 13.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.0
+  - __Added__
+    + :sparkles: User-configurable options via the `configure_status_bar_extended` command aliased as `StatusBarExtended: configure` in the Command Palette and bound to <kbd>Shift</kbd><kbd>F3</kbd> by default
+
+        |     Option    	|  Default   	|                  Description                                    	|
+        | :-------------	| :--------: 	| :-----------------------------------------                      	|
+        | Enabled       	| `True`     	|  Enable/Disable this plugin                                     	|
+        | SizeDivisor   	| `1024`     	|  File size format: decimal (1k=1000=10³) or binary (1k=1024=2¹⁰)	|
+        | MaxGlob       	| `5000`     	|  Skip folders with as many items (folders+files)                	|
+        | SymbolPane    	| `◧` `◨`    	|  `Left`/`Right` pane symbol                                     	|
+        | SymbolHiddenF 	| `◻` `◼`    	|  Hidden files `Shown`/`Hidden` symbol                           	|
+        | HideDotfile   	| `False`    	|  Treat .dotfiles as hidden files on Windows                     	|
+        | Justify       	| `5` `5` `7`	|  Minimum width of the `Folder`/`File`/`Size` values             	|
+
+    + :sparkles: A command to view current configuration (`view_configuration_status_bar_extended` aliased as `StatusBarExtended: view current configuration settings` in Command Palette)
+
+  - __Fixed__
+    + :beetle: selection updating on each cursor move even when without a `toggle_selection` argument
+    + :beetle: update function called 3 times per path change (one extra for each `from statusbarextended import StatusBarExtended`)
+    + :beetle: each pane calling the status bar update instead of only the left one (currently also the active one)
 
 ## [v0.3.1 — 07.08.2021]
   [ v0.3.1 — 07.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.3.1
