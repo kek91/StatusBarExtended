@@ -74,32 +74,41 @@ class StatusBarExtended(DirectoryPaneListener):
         jFd  = cfg['Justify']['folder']
         jFl  = cfg['Justify']['file']
         jSz  = cfg['Justify']['size']
+        lFd  = cfg['Label'  ]['folder']+' '
+        lFl  = cfg['Label'  ]['file']  +' '
+        lSz  = cfg['Label'  ]['size']  +' '
+        if cfg['Hide0Label'] == True:
+            lFd_sp = ''.rjust(len(lFd),' ')
+            lFl_sp = ''.rjust(len(lFl),' ')
+        else:
+            lFd_sp = lFd
+            lFl_sp = lFl
         dir_foldK = str("{0:,}".format(dir_folders)) # to ','→' ' add .replace(',', ' ')
         dir_fileK = str("{0:,}".format(dir_files))
         if(self.pane == panes[0]):
             statusbar_pane      += cfg['SymbolPane'][0]
         else:
             statusbar_pane      += cfg['SymbolPane'][1]
-        statusbar_pane          += "   "     + pane_show_hidden_files    + "     "
+        statusbar_pane          += "   "    + pane_show_hidden_files    + "     "
         if     dir_folders > 0:
-            statusbar_pane      += "Dirs: "  + dir_foldK.rjust(jFd, ' ') + "  "
+            statusbar_pane      += lFd      + dir_foldK.rjust(jFd, ' ') + "  "
             if dir_folders <= 9999:
-                statusbar_pane  += " "
+                statusbar_pane  +=                                           " "
         elif aboveMax:
-            statusbar_pane      += "Dirs  "  +     '+  '.rjust(jFd, ' ') + "   "
+            statusbar_pane      += lFd      +     ' + '.rjust(jFd, ' ') + "   "
         else:
-            statusbar_pane      += "      "  +        ''.rjust(jFd, ' ') + "   "
+            statusbar_pane      += lFd_sp   +        ''.rjust(jFd, ' ') + "   "
         if     dir_files > 0:
-            statusbar_pane      += "Files: " + dir_fileK.rjust(jFl, ' ') + "   "
+            statusbar_pane      += lFl      + dir_fileK.rjust(jFl, ' ') + "   "
             if dir_files <= 9999:
-                statusbar_pane  += " "
+                statusbar_pane  +=                                            " "
         elif aboveMax:
-            statusbar_pane      += "Files >" +      maxG.rjust(jFl, ' ') + "    "
+            statusbar_pane      += lFl+">"  +      maxG.rjust(jFl, ' ') + "    "
         else:
-            statusbar_pane      += "       " +        ''.rjust(jFl, ' ') + "    "
+            statusbar_pane      += lFl_sp   +        ''.rjust(jFl, ' ') + "    "
         if not aboveMax:
-            statusbar_pane      += "  Size: "+       bcc.rjust(jSz, ' ') + "   "
-            #        to align with "∑ Size: "
+            statusbar_pane      += "  "+lSz +       bcc.rjust(jSz, ' ') + "   "
+            #        to align with "∑ "
 
         show_status_message(statusbar_pane, 5000)
 
@@ -134,22 +143,31 @@ class StatusBarExtended(DirectoryPaneListener):
             jFd = cfg['Justify']['folder']
             jFl = cfg['Justify']['file']
             jSz = cfg['Justify']['size']
+            lFd = cfg['Label'  ]['folder']+' '
+            lFl = cfg['Label'  ]['file']  +' '
+            lSz = cfg['Label'  ]['size']  +' '
+            if cfg['Hide0Label'] == True:
+                lFd_sp = ''.rjust(len(lFd),' ')
+                lFl_sp = ''.rjust(len(lFl),' ')
+            else:
+                lFd_sp = lFd
+                lFl_sp = lFl
             dir_foldK  = "{0:,}".format(dir_folders)
             dir_fileK  = "{0:,}".format(dir_files)
             statusbar  = "Selected* "
             if     dir_folders > 0:
-                statusbar      += "Dirs: "   + dir_foldK.rjust(jFd, ' ') + "  "
+                statusbar      += lFd      + dir_foldK.rjust(jFd, ' ') + "  "
                 if dir_folders <= 9999:
-                    statusbar  += " "
+                    statusbar  +=                                           " "
             else:
-                statusbar      += "      "   +        ''.rjust(jFd, ' ') + "   "
+                statusbar      += lFd_sp   +        ''.rjust(jFd, ' ') + "   "
             if     dir_files > 0:
-                statusbar      += "Files: "  + dir_fileK.rjust(jFl, ' ') + "   "
+                statusbar      += lFl      + dir_fileK.rjust(jFl, ' ') + "   "
                 if dir_files <= 9999:
                     statusbar  += " "
             else:
-                statusbar      += "       "  +        ''.rjust(jFl, ' ') + "    "
-            statusbar          += "∑ Size: " +       bcc.rjust(jSz, ' ') + "   "
+                statusbar      += lFl_sp   +        ''.rjust(jFl, ' ') + "    "
+            statusbar          += "∑ "+lSz +       bcc.rjust(jSz, ' ') + "   "
             show_status_message(statusbar)
 
         else:

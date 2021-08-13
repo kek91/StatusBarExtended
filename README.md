@@ -21,22 +21,24 @@ Aligns indicator positions to avoid "jitter" on selection/navigation
 
 Allows a user to configure all the options via the `configure_status_bar_extended` command aliased as `StatusBarExtended: configure` in the Command Palette:
 
-  |     Option    	|  Default   	|                  Description                                                	|
-  | :-------------	| :--------: 	| :-----------------------------------------                                  	|
-  | Enabled       	| `True`     	|  Enable or disable this plugin                                              	|
-  | SizeDivisor   	| `1024`     	|  File size format: decimal (1k=1000=10³) or binary (1k=1024=2¹⁰)            	|
-  | MaxGlob       	| `5000`     	|  Skip folders with as many items (folders+files)                            	|
-  | SymbolPane    	| `◧` `◨`    	|  `Left`/`Right` pane symbol                                                 	|
-  | SymbolHiddenF 	| `◻` `◼`    	|  Hidden files `Shown`/`Hidden` symbol (__tip__: try `👁` `👀👓` `✓✗` `◎◉` `🐵🙈`)	|
-  | HideDotfile   	| `False`    	|  Treat .dotfiles as hidden files on Windows                                 	|
-  | Justify       	| `5` `5` `7`	|  Minimum width of the `Folder`/`File`/`Size` values, e.g.<br>5,321<br>   21 	|
+  |     Option    	|  Default                       	|                  Description                                               |
+  | :-------------	| :-----------------------------:	| :------------------------------------------------------------------------- |
+  | Enabled       	| `True`                         	|  Enable or disable this plugin                                             |
+  | SizeDivisor   	| `1024`                         	|  File size format: decimal (1k=1000=10³) or binary (1k=1024=2¹⁰)           |
+  | MaxGlob       	| `5000`                         	|  Skip folders with as many items (folders+files)                           |
+  | Label         	| `Dirs:`<br>`Files:`<br>`Size:` 	|  `Folder`/`File`/`Size` labels<br>(__tip__: try `🗀` `🗁` `🖿` `📁` `📂` `📝`) |
+  | Hide0Label    	| `True`                         	|  Hide labels when 0 folders/files                                          |
+  | SymbolPane    	| `◧` `◨`                        	|  `Left`/`Right` pane symbol                                                |
+  | SymbolHiddenF 	| `◻` `◼`                        	|  Hidden files `Shown`/`Hidden` symbol<br>(__tip__: try `👁` `👀👓` `✓✗` `◎◉` `🐵🙈`) |
+  | HideDotfile   	| `False`                        	|  Treat .dotfiles as hidden files on Windows                                 |
+  | Justify       	| `5` `5` `7`                    	|  Minimum width of the `Folder`/`File`/`Size` values, e.g.<br>5,321<br>   21 |
 
 
 **Preview**
 
 |       Status Bar without selection       |        Status Bar with selection         |
 | :--------------------------------------: | :--------------------------------------: |
-| ![Screenshot macOS 10 v0.3.0](fman-plugin-statusbarextended-v0.4.0.png) | ![Screenshot macOS 10 v0.3.0-selection](fman-plugin-statusbarextended-select-v0.4.0.png) |
+| ![Screenshot macOS 10 v0.4.0](fman-plugin-statusbarextended-v0.4.0.png) | ![Screenshot macOS 10 v0.4.0-selection](fman-plugin-statusbarextended-select-v0.4.0.png) |
 
 |       Status Bar alignment       |
 | :------------------------------: |
@@ -46,5 +48,5 @@ __Known issues__
 
 - fman raises `ValueError` on the first `Toggle hidden files` if a pane is _launched_ with hidden files _hidden_ (and status bar is not updated this one time) (__tip__: you might be able to conveniently close the error warning window with the same keybind you toggled hidden files with)
 - Status bar is NOT updated when _switching panes_ with a _mouse_ since plugins can't notice a pane switch due to a lack of the [necessary APIs](https://github.com/fman-users/fman/issues/292#issuecomment-360036718)
-- Alignment of indicators only works for _monospaced_ (fixed-width) fonts since it's currently implemented using regular spaces (__tip__: you can change this font in your `Theme.css` file `.statusbar{font-family:"yourMonospacedFont"}`). And even then fancy icons/emojis might slightly break it
+- Alignment of indicators only works for _monospaced_ (fixed-width) fonts since it's currently implemented using regular spaces (__tip__: you can change this font in your `Theme.css` file `.statusbar{font-family:"yourMonospacedFont"}`). And even then fancy icons/emojis might slightly break it (__tip__: setting `Hide0Label` to `False` might help)
 - On launch the right pane is ignored in the status bar udpate to improve performance since fman always activates the left one (and doesn't have an API to let a plugin know which pane is the active one)

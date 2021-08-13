@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file
 
 ## [Unreleased]
   [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.0...HEAD
+  - __Added__
+    + :sparkles: User-configurable options for the Folder/File/Size labels 
+
+        |     Option    	|  Default                 	|                  Description              	|
+        | :-------------	| :-----------------------:	| :-----------------------------------------	|
+        | Label         	| `Dirs:` `Files:` `Size:` 	|  `Folder`/`File`/`Size` labels            	|
+        | Hide0Label    	| `True`                   	|  Hide labels when 0 folders/files           |
 
 ## [v0.4.0 — 13.08.2021]
   [ v0.4.0 — 13.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.0
