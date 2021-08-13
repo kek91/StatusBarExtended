@@ -36,11 +36,11 @@ Allows a user to configure all the options via the `configure_status_bar_extende
 
 |       Status Bar without selection       |        Status Bar with selection         |
 | :--------------------------------------: | :--------------------------------------: |
-| ![Screenshot macOS 10 v0.3.0](fman-plugin-statusbarextended-v0.3.0.png) | ![Screenshot macOS 10 v0.3.0-selection](fman-plugin-statusbarextended-select-v0.3.0.png) |
+| ![Screenshot macOS 10 v0.3.0](fman-plugin-statusbarextended-v0.4.0.png) | ![Screenshot macOS 10 v0.3.0-selection](fman-plugin-statusbarextended-select-v0.4.0.png) |
 
 |       Status Bar alignment       |
 | :------------------------------: |
-| ![Screenshot of alignment](fman-plugin-statusbarextended-alignment-v0.3.0.png) |
+| ![Screenshot of alignment](fman-plugin-statusbarextended-alignment-v0.4.0.png) |
 
 __Known issues__
 
