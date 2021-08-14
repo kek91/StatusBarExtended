@@ -2,8 +2,10 @@
 All notable changes to this project will be documented in this file
 
 ## [Unreleased]
-  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.1...HEAD
+  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.2...HEAD
 
+## [v0.4.2 — 14.08.2021]
+  [ v0.4.2 — 14.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.2
   - __Fixed__
     + :beetle: glob meta-characters `[` `]` `*` `?` in paths (e.g. `[A--_B]`) crash glob or lead to wrong results
 
