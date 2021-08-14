@@ -2,8 +2,10 @@
 All notable changes to this project will be documented in this file
 
 ## [Unreleased]
-  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.2...HEAD
+  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.3...HEAD
 
+## [v0.4.3 — 14.08.2021]
+  [ v0.4.3 — 14.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.3
   - __Fixed__
     + :beetle: `ValueError` on the first `Toggle hidden files` if a pane is _launched_ with hidden files _hidden_
 
