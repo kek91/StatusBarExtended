@@ -2,7 +2,7 @@
 # combined filesize for selected files and the number of selected folders/files
 
 from fman import DirectoryPaneCommand, DirectoryPaneListener, load_json, save_json, PLATFORM
-from core.commands.util import is_hidden
+import core.commands
 from fman.url import splitscheme
 import statusbarextended        as SBE
 import statusbarextended_config as SBEcfg
@@ -27,28 +27,7 @@ class _CorePaneCommand(DirectoryPaneCommand): # copy from core/commands/__init__
         self.pane.move_cursor_end(      toggle_selection)
 
     def toggle_hidden_files(self):
-        _toggle_hidden_files(self.pane, not _is_showing_hidden_files(self.pane))
-def _toggle_hidden_files(pane, value):
-    if value:
-        pane._remove_filter(_hidden_file_filter)
-    else:
-        pane._add_filter(_hidden_file_filter)
-    _get_pane_info(pane)['show_hidden_files'] = value
-    save_json('Panes.json')
-def _is_showing_hidden_files(pane):
-    return _get_pane_info(pane)['show_hidden_files']
-def _get_pane_info(pane):
-    settings = load_json('Panes.json', default=[])
-    default = {'show_hidden_files': False}
-    pane_index = pane.window.get_panes().index(pane)
-    for _ in range(pane_index - len(settings) + 1):
-        settings.append(default.copy())
-    return settings[pane_index]
-def _hidden_file_filter(url):
-    if PLATFORM == 'Mac' and url == 'file:///Volumes':
-        return True
-    scheme, path = splitscheme(url)
-    return scheme != 'file://' or not is_hidden(path)
+        core.commands._toggle_hidden_files(self.pane, not core.commands._is_showing_hidden_files(self.pane))
 
 def _get_opposite_pane(pane):
     panes = pane.window.get_panes()
