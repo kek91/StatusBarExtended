@@ -78,7 +78,7 @@ class SingletonConfig(object):
             if corrupt_count: # delete corrupt config files with the user's permission
                 prompt_msg_full += "Please enter 'y' or 'yes' or '1' (without the quotes) to delete " + str(corrupt_count) + " corrupt plugin config file" \
                     + ("\n" if corrupt_count==1 else "s\n") \
-                    + "with incompatible data type " + str(type(cfgCurrent)) + '\n'\
+                    + "with an incompatible data type " + str(type(cfgCurrent)) + '\n'\
                     + "(all settings will be reset to their defaults)\n"
                 for corrupt_file_dict in corrupt_config:
                     prompt_msg_full += '\n' + corrupt_file_dict['prompt_msg'] + '\n'
