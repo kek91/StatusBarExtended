@@ -6,6 +6,7 @@ from fman.url import as_url, as_human_readable as as_path
 from fman.fs import is_dir, query
 from core.commands.util import is_hidden # works on file_paths, not urls
 import glob
+import re
 from byteconverter import ByteConverter
 #from PyQt5.QtWidgets import QApplication
 import statusbarextended_config as SBEcfg
@@ -27,15 +28,16 @@ class StatusBarExtended(DirectoryPaneListener):
                                  cfg['SymbolHiddenF'][1]
         cur_dir_url      = self.pane.get_path()
         current_dir      = as_path(cur_dir_url)
+        current_dir_gnorm= re.sub(r'(?P<bracket>\[|\]|\?|\*)',r'[\g<bracket>]',current_dir) # bracket the brackets, asterisks and question marks in paths to match them literaly instead of treating them as special globl characters
         dir_folders      = 0
         dir_files        = 0
         dir_filesize     = 0
-        dir_files_in_dir      = glob.glob(current_dir + "/*")
+        dir_files_in_dir      = glob.glob(current_dir_gnorm + "/*")
         if PLATFORM == 'Windows' and not cfg['HideDotfile']:
             # .dotfiles=regular (always shown unless have a 'hidden' attr)
-            dir_files_in_dir += glob.glob(current_dir + "/.*")
+            dir_files_in_dir += glob.glob(current_dir_gnorm + "/.*")
         elif cfg_show_hidden_files: # .dotfile=hidden (internal option shows)
-            dir_files_in_dir += glob.glob(current_dir + "/.*")
+            dir_files_in_dir += glob.glob(current_dir_gnorm + "/.*")
         f_url            = ""
         aboveMax         = False
 
