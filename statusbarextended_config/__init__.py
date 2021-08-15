@@ -26,6 +26,11 @@ class SingletonConfig(object):
         cls.Default['Enabled']      = True      # enable plugin
         cls.Default['SizeDivisor']  = 1024.0    # binary file sizes
         cls.Default['MaxGlob']      = 5000      # skip large folders with as many items; 0=∞
+        cls.Default['Label']        = odict({   # labels
+                    'folder'        : 'Dirs:' ,
+                    'file'          : 'Files:' ,
+                    'size'          : 'Size:' })
+        cls.Default['Hide0Label']   = True      # hide labels when 0 folders/files
         cls.Default['SymbolPane']   = ['◧','◨'] # Left/Right
         cls.Default['SymbolHiddenF']= ['◻','◼'] # Show/Hide hidden files
         cls.Default['HideDotfile']  = False     # hide non-hidden dotfiles on Windows
@@ -73,7 +78,7 @@ class SingletonConfig(object):
             if corrupt_count: # delete corrupt config files with the user's permission
                 prompt_msg_full += "Please enter 'y' or 'yes' or '1' (without the quotes) to delete " + str(corrupt_count) + " corrupt plugin config file" \
                     + ("\n" if corrupt_count==1 else "s\n") \
-                    + "with incompatible data type " + str(type(cfgCurrent)) + '\n'\
+                    + "with an incompatible data type " + str(type(cfgCurrent)) + '\n'\
                     + "(all settings will be reset to their defaults)\n"
                 for corrupt_file_dict in corrupt_config:
                     prompt_msg_full += '\n' + corrupt_file_dict['prompt_msg'] + '\n'
@@ -173,12 +178,14 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             + "# \tOption \t\tDescription" +'\n'\
             + "&0. \t&a&l&l\t\t"       + "Configure all the options"                    +'\n'\
             + "&1. \t&Enabled\t\t"     + "Enable/Disable this plugin"                   +'\n'\
-            + "&2. \tSize&Divisor\t"   + "File size format: decimal or binary"          +'\n'\
+            + "&2. \t&SizeDivisor\t"   + "File size format: decimal or binary"          +'\n'\
             + "&3. \tMax&Glob\t\t"     + "Skip folders with as many items"              +'\n'\
-            + "&4. \tSymbol&Pane\t"    + "Left/Right pane symbol"                       +'\n'\
-            + "&5. \tSymbol&HiddenF\t" + "Hidden files Shown/Hidden symbol"             +'\n'\
-            + "&6. \tHideD&otfile\t"   + "Treat .dotfiles as hidden files on Windows"   +'\n'\
-            + "&7. \t&Justify\t\t"     + "Minimum width of the Folder/File/Size values" +'\n'\
+            + "&4. \t&Label\t\t"       + "Labels for the Folder/File/Size values"       +'\n'\
+            + "&5. \tHide0La&bel\t"    + "Hide labels when 0 folders/files"             +'\n'\
+            + "&6. \tSymbol&Pane\t"    + "Left/Right pane symbol"                       +'\n'\
+            + "&7. \tSymbol&HiddenF\t" + "Hidden files Shown/Hidden symbol"             +'\n'\
+            + "&8. \tHide&Dotfile\t"   + "Treat .dotfiles as hidden files on Windows"   +'\n'\
+            + "&9. \t&Justify\t\t"     + "Minimum width of the Folder/File/Size values" +'\n'\
             + '\n'
         value_new, ok = show_prompt(prompt_msg)
         if not ok:
@@ -186,17 +193,21 @@ class ConfigureStatusBarExtended(ApplicationCommand):
             return
         if any(x in value_new.casefold() for x in ('1','e','0','all')):
             self.setEnabled(      cfg.Default['Enabled'])
-        if any(x in value_new.casefold() for x in ('2','d','0','all')):
+        if any(x in value_new.casefold() for x in ('2','s','0','all')):
             self.setSizeDivisor(  cfg.Default['SizeDivisor'])
         if any(x in value_new.casefold() for x in ('3','g','0','all')):
             self.setMaxGlob(      cfg.Default['MaxGlob'])
-        if any(x in value_new.casefold() for x in ('4','p','0','all')):
+        if any(x in value_new.casefold() for x in ('4','l','0','all')):
+            self.setLabel(        cfg.Default['Label'])
+        if any(x in value_new.casefold() for x in ('5','b','0','all')):
+            self.setHide0Label(   cfg.Default['Hide0Label'])
+        if any(x in value_new.casefold() for x in ('6','p','0','all')):
             self.setSymbolPane(   cfg.Default['SymbolPane'])
-        if any(x in value_new.casefold() for x in ('5','h','0','all')):
+        if any(x in value_new.casefold() for x in ('7','h','0','all')):
             self.setSymbolHiddenF(cfg.Default['SymbolHiddenF'])
-        if any(x in value_new.casefold() for x in ('6','o','0','all')):
+        if any(x in value_new.casefold() for x in ('8','d','0','all')):
             self.setHideDotfile(  cfg.Default['HideDotfile'])
-        if any(x in value_new.casefold() for x in ('7','j','0','all')):
+        if any(x in value_new.casefold() for x in ('9','j','0','all')):
             self.setJustify(      cfg.Default['Justify'])
         cfg.saveConfig(self.cfgCurrent)
         run_application_command('view_configuration_status_bar_extended')
@@ -278,6 +289,71 @@ class ConfigureStatusBarExtended(ApplicationCommand):
                 show_alert("You entered\n" + value_new +'\n'\
                     + "but I was expecting a non-negative integer 0,1,2,3–∞")
         self.cfgCurrent['MaxGlob'] = int(value_new)
+
+    def setLabel(self, value_default):
+        value_cfg_in    = self.cfgCurrent['Label']
+        value_cfg       = " ".join(val for val in  value_cfg_in.values())
+        val_def_fmt     = " ".join(val for val in value_default.values())
+        prompt_msg      = "Please enter three words/symbols, separated by space, to set label names for" +'\n'\
+            + "the folder, file, and size indicators respectively." +'\n'\
+            + "or enter '0' to restore an individual default" +'\n'\
+            + "or leave the field empty to restore all the defaults ("+val_def_fmt+"):"
+        selection_start = 0
+        selection_end   = 0
+        value_new       = ''
+        value_new_list  = []
+        _len            = len(value_new_list)
+        len_def         = len(value_default)
+        while _len != len_def:
+            value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start, selection_end)
+            value_cfg = value_new # preserve user input on multiple edits
+            if not ok:
+                show_status_message("StatusBarExtended: setup canceled")
+                return
+            if value_new.strip(' ') == '':
+                self.cfgCurrent['Label'] = value_default
+                return
+            value_new_nosp = ' '.join(value_new.split()) # replace multiple spaces with 1
+            value_new_list = value_new_nosp.split(' ')   # split by space
+            _len = len(value_new_list)
+            if _len != len_def:
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + str(value_new_list) + " with " + str(_len) + " element" + ("" if _len==1 else "s") +'\n'\
+                    + "but was expecting " + str(len_def) + " elements")
+        for i, key in enumerate(value_default):
+            if value_new_list[i] == '0':
+                self.cfgCurrent['Label'][key] = value_default[key]
+            else:
+                self.cfgCurrent['Label'][key] = value_new_list[i]
+
+    def setHide0Label(self, value_default):
+        _t      = ('1', 't', 'true')
+        _f      = ('0', 'f', 'false')
+        _tsep   = "'" + "' or '".join(_t) + "'"
+        _fsep   = "'" + "' or '".join(_f) + "'"
+        _accept = (_t + _f)
+        value_cfg       = str(self.cfgCurrent['Hide0Label'])
+        prompt_msg      = "Please enter " +_tsep+ " to hide labels when 0 Folders/Files" +'\n'\
+            + "or " +_fsep+ " to keep them visible" +'\n'\
+            + "or leave the field empty to restore the default ("+str(value_default) +'):'
+        selection_start = 0
+        value_new       = ''
+        value_new_fmt   = value_new.casefold()
+        while value_new_fmt not in _accept:
+            value_new, ok = show_prompt(prompt_msg, value_cfg, selection_start)
+            value_cfg = value_new # preserve user input on multiple edits
+            if not ok:
+                show_status_message("StatusBarExtended: setup canceled")
+                return
+            if value_new.strip(' ') == '':
+                self.cfgCurrent['Hide0Label'] = value_default
+                return
+            value_new_fmt = value_new.casefold()
+            if value_new_fmt not in _accept:
+                show_alert("You entered\n" + value_new +'\n'\
+                    + "I parsed it as " + value_new_fmt +'\n'\
+                    + "but the only acceptable values are:\n" +_tsep+ "\n" +_fsep)
+        self.cfgCurrent['Hide0Label'] = True if value_new_fmt in _t else False
 
     def setSymbolPane(self, value_default):
         value_cfg       = " ".join(self.cfgCurrent['SymbolPane'])
@@ -362,7 +438,11 @@ class ConfigureStatusBarExtended(ApplicationCommand):
                 show_alert("You entered\n" + value_new +'\n'\
                     + "I parsed it as " + value_new_fmt +'\n'\
                     + "but the only acceptable values are:\n" +_tsep+ "\n" +_fsep)
+        value_old = self.cfgCurrent['HideDotfile']
         self.cfgCurrent['HideDotfile'] = True if value_new_fmt in _t else False
+        value_new = self.cfgCurrent['HideDotfile']
+        if value_old != value_new:
+            show_alert("You've changed HideDotfile value, please restart fman\nfor the change to take effect!")
 
     def setJustify(self, value_default):
         value_cfg_in    = self.cfgCurrent['Justify']
@@ -443,8 +523,16 @@ class ViewConfigurationStatusBarExtended(ApplicationCommand):
                 cfg_fmt += key +'\t  =  '+ " ".join(cfgCurrent[key]) + "\t"+" ".join(cfg.Default[key]) +'\n'
             elif key in ('SymbolHiddenF'):
                 cfg_fmt += key +    '='  + " ".join(cfgCurrent[key]) + "\t"+" ".join(cfg.Default[key]) +'\n'
+            elif key in ('Label'):
+                cfg_fmt += key +'\n'
+                for subkey in cfg.Default['Label']:
+                    cfg_fmt += '  ' + subkey +'\t  =  '+ cfgCurrent[ 'Label'][subkey] +'\t'
+                    cfg_fmt +=                           cfg.Default['Label'][subkey] +'\n'
             elif key in ('Justify'):
-                cfg_fmt += key +'\t  =  '+ " ".join(str(v) for v in cfgCurrent['Justify'].values()) + "\t"+" ".join(str(v) for v in cfg.Default['Justify'].values()) +'\n'
+                cfg_fmt += key +'\n'
+                for subkey in cfg.Default['Justify']:
+                    cfg_fmt+='  '+subkey+'\t  =  '+str(cfgCurrent[ 'Justify'][subkey]) +'\t'
+                    cfg_fmt+=                      str(cfg.Default['Justify'][subkey]) +'\n'
             else:
                 cfg_fmt += key +'\t  =  '+ str(cfgCurrent[key]) + "\t"+str(cfg.Default[key]) +'\n'
         show_alert(cfg_fmt)

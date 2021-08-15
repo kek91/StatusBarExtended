@@ -6,6 +6,7 @@ from fman.url import as_url, as_human_readable as as_path
 from fman.fs import is_dir, query
 from core.commands.util import is_hidden # works on file_paths, not urls
 import glob
+import re
 from byteconverter import ByteConverter
 #from PyQt5.QtWidgets import QApplication
 import statusbarextended_config as SBEcfg
@@ -27,15 +28,16 @@ class StatusBarExtended(DirectoryPaneListener):
                                  cfg['SymbolHiddenF'][1]
         cur_dir_url      = self.pane.get_path()
         current_dir      = as_path(cur_dir_url)
+        current_dir_gnorm= re.sub(r'(?P<bracket>\[|\]|\?|\*)',r'[\g<bracket>]',current_dir) # bracket the brackets, asterisks and question marks in paths to match them literaly instead of treating them as special globl characters
         dir_folders      = 0
         dir_files        = 0
         dir_filesize     = 0
-        dir_files_in_dir      = glob.glob(current_dir + "/*")
+        dir_files_in_dir      = glob.glob(current_dir_gnorm + "/*")
         if PLATFORM == 'Windows' and not cfg['HideDotfile']:
             # .dotfiles=regular (always shown unless have a 'hidden' attr)
-            dir_files_in_dir += glob.glob(current_dir + "/.*")
+            dir_files_in_dir += glob.glob(current_dir_gnorm + "/.*")
         elif cfg_show_hidden_files: # .dotfile=hidden (internal option shows)
-            dir_files_in_dir += glob.glob(current_dir + "/.*")
+            dir_files_in_dir += glob.glob(current_dir_gnorm + "/.*")
         f_url            = ""
         aboveMax         = False
 
@@ -74,32 +76,41 @@ class StatusBarExtended(DirectoryPaneListener):
         jFd  = cfg['Justify']['folder']
         jFl  = cfg['Justify']['file']
         jSz  = cfg['Justify']['size']
+        lFd  = cfg['Label'  ]['folder']+' '
+        lFl  = cfg['Label'  ]['file']  +' '
+        lSz  = cfg['Label'  ]['size']  +' '
+        if cfg['Hide0Label'] == True:
+            lFd_sp = ''.rjust(len(lFd),' ')
+            lFl_sp = ''.rjust(len(lFl),' ')
+        else:
+            lFd_sp = lFd
+            lFl_sp = lFl
         dir_foldK = str("{0:,}".format(dir_folders)) # to ','→' ' add .replace(',', ' ')
         dir_fileK = str("{0:,}".format(dir_files))
         if(self.pane == panes[0]):
             statusbar_pane      += cfg['SymbolPane'][0]
         else:
             statusbar_pane      += cfg['SymbolPane'][1]
-        statusbar_pane          += "   "     + pane_show_hidden_files    + "     "
+        statusbar_pane          += "   "    + pane_show_hidden_files    + "     "
         if     dir_folders > 0:
-            statusbar_pane      += "Dirs: "  + dir_foldK.rjust(jFd, ' ') + "  "
+            statusbar_pane      += lFd      + dir_foldK.rjust(jFd, ' ') + "  "
             if dir_folders <= 9999:
-                statusbar_pane  += " "
+                statusbar_pane  +=                                           " "
         elif aboveMax:
-            statusbar_pane      += "Dirs  "  +     '+  '.rjust(jFd, ' ') + "   "
+            statusbar_pane      += lFd      +     ' + '.rjust(jFd, ' ') + "   "
         else:
-            statusbar_pane      += "      "  +        ''.rjust(jFd, ' ') + "   "
+            statusbar_pane      += lFd_sp   +        ''.rjust(jFd, ' ') + "   "
         if     dir_files > 0:
-            statusbar_pane      += "Files: " + dir_fileK.rjust(jFl, ' ') + "   "
+            statusbar_pane      += lFl      + dir_fileK.rjust(jFl, ' ') + "   "
             if dir_files <= 9999:
-                statusbar_pane  += " "
+                statusbar_pane  +=                                            " "
         elif aboveMax:
-            statusbar_pane      += "Files >" +      maxG.rjust(jFl, ' ') + "    "
+            statusbar_pane      += lFl+">"  +      maxG.rjust(jFl, ' ') + "    "
         else:
-            statusbar_pane      += "       " +        ''.rjust(jFl, ' ') + "    "
+            statusbar_pane      += lFl_sp   +        ''.rjust(jFl, ' ') + "    "
         if not aboveMax:
-            statusbar_pane      += "  Size: "+       bcc.rjust(jSz, ' ') + "   "
-            #        to align with "∑ Size: "
+            statusbar_pane      += "  "+lSz +       bcc.rjust(jSz, ' ') + "   "
+            #        to align with "∑ "
 
         show_status_message(statusbar_pane, 5000)
 
@@ -134,22 +145,31 @@ class StatusBarExtended(DirectoryPaneListener):
             jFd = cfg['Justify']['folder']
             jFl = cfg['Justify']['file']
             jSz = cfg['Justify']['size']
+            lFd = cfg['Label'  ]['folder']+' '
+            lFl = cfg['Label'  ]['file']  +' '
+            lSz = cfg['Label'  ]['size']  +' '
+            if cfg['Hide0Label'] == True:
+                lFd_sp = ''.rjust(len(lFd),' ')
+                lFl_sp = ''.rjust(len(lFl),' ')
+            else:
+                lFd_sp = lFd
+                lFl_sp = lFl
             dir_foldK  = "{0:,}".format(dir_folders)
             dir_fileK  = "{0:,}".format(dir_files)
             statusbar  = "Selected* "
             if     dir_folders > 0:
-                statusbar      += "Dirs: "   + dir_foldK.rjust(jFd, ' ') + "  "
+                statusbar      += lFd      + dir_foldK.rjust(jFd, ' ') + "  "
                 if dir_folders <= 9999:
-                    statusbar  += " "
+                    statusbar  +=                                           " "
             else:
-                statusbar      += "      "   +        ''.rjust(jFd, ' ') + "   "
+                statusbar      += lFd_sp   +        ''.rjust(jFd, ' ') + "   "
             if     dir_files > 0:
-                statusbar      += "Files: "  + dir_fileK.rjust(jFl, ' ') + "   "
+                statusbar      += lFl      + dir_fileK.rjust(jFl, ' ') + "   "
                 if dir_files <= 9999:
                     statusbar  += " "
             else:
-                statusbar      += "       "  +        ''.rjust(jFl, ' ') + "    "
-            statusbar          += "∑ Size: " +       bcc.rjust(jSz, ' ') + "   "
+                statusbar      += lFl_sp   +        ''.rjust(jFl, ' ') + "    "
+            statusbar          += "∑ "+lSz +       bcc.rjust(jSz, ' ') + "   "
             show_status_message(statusbar)
 
         else:

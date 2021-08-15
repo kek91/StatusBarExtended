@@ -2,7 +2,32 @@
 All notable changes to this project will be documented in this file
 
 ## [Unreleased]
-  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.0...HEAD
+  [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.4...HEAD
+
+## [v0.4.4 — 15.08.2021]
+  [ v0.4.4 — 15.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.4
+  - __Added__
+    + :sparkles: `HideDotfile` now also affects the pane list, not just the status bar
+
+## [v0.4.3 — 14.08.2021]
+  [ v0.4.3 — 14.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.3
+  - __Fixed__
+    + :beetle: `ValueError` on the first `Toggle hidden files` if a pane is _launched_ with hidden files _hidden_
+
+## [v0.4.2 — 14.08.2021]
+  [ v0.4.2 — 14.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.2
+  - __Fixed__
+    + :beetle: glob meta-characters `[` `]` `*` `?` in paths (e.g. `[A--_B]`) crash glob or lead to wrong results
+
+## [v0.4.1 — 13.08.2021]
+  [ v0.4.1 — 13.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.1
+  - __Added__
+    + :sparkles: User-configurable options for the Folder/File/Size labels 
+
+        |     Option    	|  Default                 	|                  Description              	|
+        | :-------------	| :-----------------------:	| :-----------------------------------------	|
+        | Label         	| `Dirs:` `Files:` `Size:` 	|  `Folder`/`File`/`Size` labels            	|
+        | Hide0Label    	| `True`                   	|  Hide labels when 0 folders/files           |
 
 ## [v0.4.0 — 13.08.2021]
   [ v0.4.0 — 13.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.0
