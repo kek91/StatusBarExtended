@@ -30,7 +30,7 @@ Allows a user to configure all the options via the `configure_status_bar_extende
   | Hide0Label    	| `True`                         	|  Hide labels when 0 folders/files                                          |
   | SymbolPane    	| `◧` `◨`                        	|  `Left`/`Right` pane symbol                                                |
   | SymbolHiddenF 	| `◻` `◼`                        	|  Hidden files `Shown`/`Hidden` symbol<br>(__tip__: try `👁` `👀👓` `✓✗` `◎◉` `🐵🙈`) |
-  | HideDotfile   	| `False`                        	|  Treat .dotfiles as hidden files on Windows                                 |
+  | HideDotfile   	| `False`                        	|  Treat .dotfiles as hidden files on Windows (also affects the pane view)   |
   | Justify       	| `5` `5` `7`                    	|  Minimum width of the `Folder`/`File`/`Size` values, e.g.<br>5,321<br>   21 |
 
 

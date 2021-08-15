@@ -438,7 +438,11 @@ class ConfigureStatusBarExtended(ApplicationCommand):
                 show_alert("You entered\n" + value_new +'\n'\
                     + "I parsed it as " + value_new_fmt +'\n'\
                     + "but the only acceptable values are:\n" +_tsep+ "\n" +_fsep)
+        value_old = self.cfgCurrent['HideDotfile']
         self.cfgCurrent['HideDotfile'] = True if value_new_fmt in _t else False
+        value_new = self.cfgCurrent['HideDotfile']
+        if value_old != value_new:
+            show_alert("You've changed HideDotfile value, please restart fman\nfor the change to take effect!")
 
     def setJustify(self, value_default):
         value_cfg_in    = self.cfgCurrent['Justify']

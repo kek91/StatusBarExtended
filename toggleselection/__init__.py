@@ -3,7 +3,6 @@
 
 from fman import DirectoryPaneCommand, DirectoryPaneListener, load_json, save_json, PLATFORM
 import core.commands
-from fman.url import splitscheme
 import statusbarextended        as SBE
 import statusbarextended_config as SBEcfg
 

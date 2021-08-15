@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file
 
 ## [Unreleased]
   [ Unreleased]: https://github.com/kek91/StatusBarExtended/compare/v0.4.3...HEAD
+  - __Added__
+    + :sparkles: `HideDotfile` now also affects the pane list, not just the status bar
 
 ## [v0.4.3 — 14.08.2021]
   [ v0.4.3 — 14.08.2021]: https://github.com/kek91/StatusBarExtended/releases/tag/v0.4.3
